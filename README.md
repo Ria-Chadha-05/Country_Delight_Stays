@@ -108,17 +108,17 @@ The entire strategic thesis depends on Country Delight's food/sourcing trust tra
 
 The research was delivered as five interactive HTML reports covering market sizing, user research, segment needs analysis, competitive/product analysis, and product strategy.
 
-### Interactive Reports
+### Live Reports
 
-Open the HTML reports directly:
+Each report is hosted and viewable directly in the browser — no download needed:
 
-```bash
-CD_Market_Sizing.html
-USER_STUDY.html
-Mid_Premium_Segment_Needs.html
-PRODUCT_ANALYSIS.html
-PRODUCT_STRATEGY.html
-```
+| File | Live Link |
+|---|---|
+| `CD_Market_Sizing.html` | [View](https://ria-chadha-05.github.io/Country_Delight_Stays/CD_Market_Sizing.html) |
+| `USER_STUDY.html` | [View](https://ria-chadha-05.github.io/Country_Delight_Stays/USER_STUDY.html) |
+| `Mid_Premium_Segment_Needs.html` | [View](https://ria-chadha-05.github.io/Country_Delight_Stays/Mid_Premium_Segment_Needs.html) |
+| `PRODUCT_ANALYSIS.html` | [View](https://ria-chadha-05.github.io/Country_Delight_Stays/PRODUCT_ANALYSIS.html) |
+| `PRODUCT_STRATEGY.html` | [View](https://ria-chadha-05.github.io/Country_Delight_Stays/PRODUCT_STRATEGY.html) |
 
 ---
 

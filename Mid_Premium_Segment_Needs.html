@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mid & Premium Segment — Customer Needs Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root{
+  --green:#1E8E5A; --green-2:#4CAF50; --off-white:#F8FAF8; --dark:#1B1B1B; --grey:#6B7280;
+  --soil:#A9824C; --soil-light:#EFE3CE; --forest:#0F3A28; --border:rgba(27,27,27,0.1);
+  --shadow:0 8px 24px rgba(15,58,40,0.08);
+  --radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--off-white);color:var(--dark);line-height:1.6;}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:600;letter-spacing:-0.01em;}
+.wrap{max-width:1000px;margin:0 auto;padding:0 28px;}
+
+header.top{background:linear-gradient(160deg,var(--forest),var(--green));color:#fff;padding:48px 0 36px;}
+header.top .eyebrow{font-size:12.5px;letter-spacing:.09em;text-transform:uppercase;color:#BFE7CE;font-weight:700;margin-bottom:14px;}
+header.top h1{font-size:clamp(24px,3.6vw,34px);color:#fff;max-width:780px;line-height:1.2;}
+
+section{padding:44px 0;}
+section.alt{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:10px;}
+h2{font-size:clamp(20px,2.6vw,26px);margin-bottom:20px;}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+@media(max-width:800px){.grid-2{grid-template-columns:1fr;}}
+
+.seg-card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);}
+.seg-top{padding:16px 20px;color:#fff;}
+.seg-top.mid{background:linear-gradient(135deg,var(--forest),var(--green));}
+.seg-top.premium{background:linear-gradient(135deg,#5c3d17,var(--soil));}
+.seg-top h4{color:#fff;font-size:16px;}
+.seg-top p{font-size:12.5px;color:rgba(255,255,255,.85);margin-top:2px;}
+.seg-body{padding:16px 20px;}
+.seg-body .f{margin-bottom:8px;font-size:13px;}
+.seg-body .f b{color:var(--forest);}
+
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);font-size:13px;margin-bottom:6px;}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top;}
+th{background:var(--forest);color:#fff;font-size:11px;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+td.num{font-weight:700;color:var(--forest);white-space:nowrap;}
+
+.chart-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow);margin-bottom:16px;}
+.chart-card h4{font-size:14px;margin-bottom:12px;color:var(--forest);}
+.chart-wrap{position:relative;height:280px;}
+
+footer{padding:30px 0;text-align:center;color:var(--grey);font-size:12px;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Customer Understanding</div>
+    <h1>Mid & Premium Segment — Needs & Expectations</h1>
+  </div>
+</header>
+
+<!-- ============ SEGMENT OVERVIEW ============ -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">01 — Segment Overview</span>
+    <h2>Who each segment is</h2>
+    <div class="grid-2">
+      <div class="seg-card">
+        <div class="seg-top mid"><h4>Mid</h4><p>₹3,000–5,000 / person / day · Age 25–40</p></div>
+        <div class="seg-body">
+          <div class="f"><b>Who:</b> Young professionals, families, friend groups</div>
+          <div class="f"><b>Trip style:</b> Day trip to 2 nights, weekend-driven</div>
+          <div class="f"><b>Buying mindset:</b> Value-conscious, wants curation but still price-aware</div>
+        </div>
+      </div>
+      <div class="seg-card">
+        <div class="seg-top premium"><h4>Premium</h4><p>₹10,000+ / person / day · Age 30–45</p></div>
+        <div class="seg-body">
+          <div class="f"><b>Who:</b> Couples, senior couples, celebration occasions</div>
+          <div class="f"><b>Trip style:</b> 1–2 nights, occasion or comfort-driven</div>
+          <div class="f"><b>Buying mindset:</b> Pays to remove effort and get exclusivity, not to save money</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MID SEGMENT NEEDS ============ -->
+<section class="alt">
+  <div class="wrap">
+    <span class="eyebrow">02 — Mid Segment: Needs & Expectations</span>
+    <h2>What has to be true for a Mid customer to book</h2>
+    <table>
+      <tr><th>Need</th><th>Expectation</th></tr>
+      <tr><td>Trust</td><td>Vetted, pre-checked options — not a raw listing to research themselves</td></tr>
+      <tr><td>Price transparency</td><td>All-in pricing upfront, no hidden costs at checkout</td></tr>
+      <tr><td>Low planning effort</td><td>Pre-built, bookable itinerary instead of open-ended search</td></tr>
+      <tr><td>Family/pet fit</td><td>Explicit filtering — a wrong-fit option is disqualifying, not just less appealing</td></tr>
+      <tr><td>Value justification</td><td>Clear reason the price beats doing it themselves</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ PREMIUM SEGMENT NEEDS ============ -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">03 — Premium Segment: Needs & Expectations</span>
+    <h2>What has to be true for a Premium customer to book</h2>
+    <table>
+      <tr><th>Need</th><th>Expectation</th></tr>
+      <tr><td>Zero planning effort</td><td>Fully bundled end-to-end, including transport — no decisions left to make</td></tr>
+      <tr><td>Privacy/exclusivity</td><td>Not a crowded, generic resort — private or curated-scarce venues</td></tr>
+      <tr><td>Personalization</td><td>Customization for occasions (anniversaries, celebrations)</td></tr>
+      <tr><td>Distinctiveness</td><td>Shareable, non-generic experience — not "every other resort on Instagram"</td></tr>
+      <tr><td>Service quality</td><td>White-glove handling; price is not the deciding factor</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ DECISION DRIVERS COMPARISON ============ -->
+<section class="alt">
+  <div class="wrap">
+    <span class="eyebrow">04 — Decision Drivers, Compared</span>
+    <h2>What weighs more for each segment</h2>
+    <div class="chart-card"><div class="chart-wrap"><canvas id="driverChart"></canvas></div></div>
+  </div>
+</section>
+
+<!-- ============ ARCHETYPE MAPPING ============ -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">05 — Archetype Mapping</span>
+    <h2>Which archetypes sit in each segment</h2>
+    <table>
+      <tr><th>Archetype</th><th>Segment</th><th>Core expectation</th></tr>
+      <tr><td>Burnt-out Professional</td><td class="num">Mid</td><td>One-tap, already-planned trusted option</td></tr>
+      <tr><td>Family Planner</td><td class="num">Mid</td><td>Upfront safety and hygiene signals</td></tr>
+      <tr><td>Weekend Explorer</td><td class="num">Mid</td><td>Fresh, curated suggestions beyond the usual spots</td></tr>
+      <tr><td>Nature Seeker</td><td class="num">Mid</td><td>Authenticity over polish</td></tr>
+      <tr><td>Celebration Planner</td><td class="num">Premium</td><td>Customization layer on top of curated formats</td></tr>
+      <tr><td>Convenience-First Traveller</td><td class="num">Premium</td><td>Fully bundled, zero-decision experience</td></tr>
+      <tr><td>Experience Collector</td><td class="num">Premium</td><td>Distinctive, shareable formats</td></tr>
+    </table>
+  </div>
+</section>
+
+<footer>Mid & Premium Segment — Customer Needs Analysis. Reasoned from behavioural hypotheses, not validated user research.</footer>
+
+<script>
+window.addEventListener('load', () => {
+  const green='#1E8E5A', soil='#A9824C';
+  new Chart(document.getElementById('driverChart'), {
+    type:'bar',
+    data:{ labels:['Trust','Price','Planning effort','Family/pet fit','Privacy','Personalization','Distinctiveness'],
+      datasets:[
+        {label:'Mid', data:[9,8,8,8,4,3,4], backgroundColor:green, borderRadius:6, maxBarThickness:26},
+        {label:'Premium', data:[9,3,9,4,8,8,8], backgroundColor:soil, borderRadius:6, maxBarThickness:26}
+      ] },
+    options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{ position:'bottom', labels:{ boxWidth:12, font:{size:12} } } },
+      scales:{ x:{ beginAtZero:true, max:10, ticks:{display:false}, grid:{ color:'#eee' } }, y:{ grid:{ display:false } } } }
+  });
+});
+</script>
+</body>
+</html>

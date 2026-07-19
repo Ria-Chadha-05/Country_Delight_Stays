@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Country Delight Stays — User Study &amp; Customer Understanding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root{
+  --green:#1E8E5A; --green-2:#4CAF50; --off-white:#F8FAF8; --dark:#1B1B1B; --grey:#6B7280;
+  --soil:#A9824C; --soil-light:#EFE3CE; --forest:#0F3A28; --border:rgba(27,27,27,0.1);
+  --hyp:#7A5CB8; --trend:#1E8E5A;
+  --shadow:0 8px 24px rgba(15,58,40,0.08); --radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--off-white);color:var(--dark);line-height:1.6;}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:600;letter-spacing:-0.01em;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+a{color:var(--green);}
+
+#navtoggle{display:none;position:fixed;top:14px;left:14px;z-index:1000;background:var(--dark);color:#fff;border:none;width:42px;height:42px;border-radius:10px;align-items:center;justify-content:center;box-shadow:var(--shadow);}
+#navtoggle svg{width:18px;height:18px;}
+#sidenav{position:fixed;top:0;left:0;height:100vh;width:250px;background:rgba(248,250,248,.9);backdrop-filter:blur(14px);border-right:1px solid var(--border);z-index:900;padding:22px 14px;overflow-y:auto;}
+#sidenav .brand{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--forest);padding:0 8px 14px;border-bottom:1px solid var(--border);margin-bottom:10px;}
+#sidenav a{display:block;text-decoration:none;color:var(--grey);font-size:12.5px;padding:6px 8px;border-radius:8px;font-weight:500;}
+#sidenav a:hover{background:rgba(30,142,90,.08);color:var(--dark);}
+main{margin-left:250px;}
+@media(max-width:980px){
+  #sidenav{transform:translateX(-100%);transition:transform .3s ease;box-shadow:var(--shadow);}
+  #sidenav.open{transform:translateX(0);}
+  main{margin-left:0;} #navtoggle{display:flex;}
+}
+
+header.top{background:linear-gradient(160deg,var(--forest),var(--green));color:#fff;padding:60px 0 44px;}
+header.top .eyebrow{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:#BFE7CE;font-weight:700;margin-bottom:16px;}
+header.top h1{font-size:clamp(26px,4vw,40px);color:#fff;max-width:800px;line-height:1.15;}
+header.top p.sub{margin-top:16px;color:rgba(255,255,255,.82);max-width:700px;font-size:15px;}
+.badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
+.badge{font-size:11.5px;font-weight:700;padding:6px 12px;border-radius:100px;border:1px solid rgba(255,255,255,.3);color:#fff;}
+
+.callout{background:#fff;border:1px solid var(--border);border-left:4px solid var(--soil);border-radius:12px;padding:20px 24px;margin:24px 0;box-shadow:var(--shadow);}
+.callout.warn{border-left-color:#B4442E;background:#FBF3EF;}
+.callout.hyp{border-left-color:var(--hyp);background:#F4F0FA;}
+.callout h4{font-size:14px;margin-bottom:8px;}
+.callout p,.callout li{font-size:13.5px;color:var(--dark);}
+
+.legend-key{display:flex;gap:16px;flex-wrap:wrap;margin:12px 0 4px;font-size:12px;}
+.legend-key span{display:inline-flex;align-items:center;gap:6px;font-weight:600;}
+.legend-key .dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+.dot.hyp{background:var(--hyp);} .dot.trend{background:var(--trend);}
+
+section{padding:46px 0;scroll-margin-top:16px;}
+section.alt{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.eyebrow{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:8px;}
+h2{font-size:clamp(20px,2.5vw,27px);margin-bottom:8px;}
+h3{font-size:16.5px;margin:20px 0 10px;}
+p.lead{color:var(--grey);max-width:740px;margin-bottom:22px;font-size:14.5px;}
+
+.grid{display:grid;gap:14px;}
+.grid-4{grid-template-columns:repeat(4,1fr);} .grid-3{grid-template-columns:repeat(3,1fr);} .grid-2{grid-template-columns:repeat(2,1fr);}
+@media(max-width:900px){.grid-4,.grid-3,.grid-2{grid-template-columns:1fr 1fr;}}
+@media(max-width:640px){.grid-4,.grid-3,.grid-2{grid-template-columns:1fr;}}
+
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow);}
+.card h4{font-size:14px;margin-bottom:6px;}
+.card p{font-size:12.5px;color:var(--grey);}
+
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);font-size:12.5px;margin-bottom:8px;}
+th,td{padding:9px 11px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top;}
+th{background:var(--forest);color:#fff;font-size:10px;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;} tr:hover td{background:#FAFBF9;}
+.tablewrap{overflow-x:auto;margin-bottom:18px;}
+.pill{font-size:9px;font-weight:800;padding:2px 7px;border-radius:100px;white-space:nowrap;display:inline-block;}
+.pill.hyp{background:#EEE8F8;color:var(--hyp);} .pill.trend{background:#E4F3EA;color:var(--trend);}
+
+.seg-card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);}
+.seg-top{padding:16px 18px;background:linear-gradient(135deg,var(--forest),var(--green));color:#fff;}
+.seg-top h4{color:#fff;font-size:15px;}
+.seg-body{padding:14px 18px;}
+.seg-body .f{margin-bottom:8px;font-size:12px;}
+.seg-body .f b{color:var(--forest);}
+
+.arch-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow);}
+.arch-card h4{font-size:16px;margin-bottom:4px;}
+.arch-card .tag{font-size:11px;color:var(--soil);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;}
+.arch-card .quote{font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;color:var(--dark);border-left:3px solid var(--soil);padding-left:12px;margin:10px 0;}
+.arch-card .quote-label{font-size:10px;color:var(--grey);text-transform:uppercase;letter-spacing:.04em;}
+.arch-card .field{margin-bottom:8px;font-size:12.5px;}
+.arch-card .field b{color:var(--forest);}
+
+.journey-step{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:3px;position:relative;}
+.journey-step::after{content:'↓';position:absolute;left:24px;bottom:-22px;font-size:14px;color:var(--soil);z-index:2;}
+.journey-step:last-child::after{display:none;}
+.journey-step h4{font-size:14.5px;margin-bottom:8px;}
+.journey-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;font-size:11.5px;}
+@media(max-width:800px){.journey-grid{grid-template-columns:1fr 1fr;}}
+.journey-grid div{background:var(--off-white);border-radius:8px;padding:8px 10px;}
+.journey-grid .k{font-weight:700;color:var(--soil);font-size:10px;text-transform:uppercase;letter-spacing:.03em;display:block;margin-bottom:3px;}
+
+.tree{display:flex;flex-direction:column;gap:16px;}
+.tree-branch{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 20px;box-shadow:var(--shadow);}
+.tree-branch h4{font-size:15px;margin-bottom:10px;color:var(--forest);}
+.tree-leaves{display:flex;gap:8px;flex-wrap:wrap;}
+.tree-leaves span{background:var(--soil-light);border-radius:100px;padding:5px 12px;font-size:12px;font-weight:600;color:var(--forest);}
+
+.motiv-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:var(--shadow);}
+.motiv-card h4{font-size:15px;margin-bottom:8px;}
+.motiv-card .f{font-size:12.5px;margin-bottom:6px;} .motiv-card .f b{color:var(--forest);}
+
+.opp-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow);margin-bottom:10px;}
+.opp-card h4{font-size:14.5px;margin-bottom:8px;}
+.opp-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;font-size:12px;}
+@media(max-width:800px){.opp-row{grid-template-columns:1fr;}}
+.opp-row div{background:var(--off-white);border-radius:8px;padding:8px 10px;}
+.opp-row .k{font-weight:700;color:var(--soil);font-size:10px;text-transform:uppercase;display:block;margin-bottom:3px;}
+
+.principle-card{background:linear-gradient(135deg,var(--forest),var(--green));color:#fff;border-radius:14px;padding:20px;}
+.principle-card h4{color:#fff;font-size:15px;margin-bottom:6px;}
+.principle-card p{color:rgba(255,255,255,.82);font-size:12.5px;}
+
+.impl-flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+.impl-box{background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 16px;flex:1;min-width:180px;font-size:12.5px;}
+.impl-box .k{font-size:10px;font-weight:800;color:var(--soil);text-transform:uppercase;letter-spacing:.04em;display:block;margin-bottom:4px;}
+.impl-arrow{color:var(--soil);font-size:16px;}
+@media(max-width:800px){.impl-arrow{transform:rotate(90deg);}}
+
+.chart-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);}
+.chart-card h4{font-size:14px;margin-bottom:4px;}
+.chart-card .note{font-size:11.5px;color:var(--grey);margin-bottom:14px;}
+.chart-wrap{position:relative;height:250px;}
+
+.source-list{columns:2;column-gap:36px;font-size:12px;}
+@media(max-width:800px){.source-list{columns:1;}}
+.source-item{break-inside:avoid;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.source-item .t{font-weight:700;display:block;}
+.source-item a{font-size:10.5px;word-break:break-all;}
+
+footer{padding:34px 0;text-align:center;color:var(--grey);font-size:11.5px;}
+</style>
+</head>
+<body>
+
+<button id="navtoggle" aria-label="Toggle navigation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+
+<nav id="sidenav">
+  <div class="brand">User Study</div>
+  <a href="#exec">01 Executive Summary</a>
+  <a href="#method">02 Research Methodology</a>
+  <a href="#segments">03 User Segments &amp; Archetypes</a>
+  <a href="#behaviour">04 Travel Behaviour</a>
+  <a href="#journey">05 Trip Planning Journey</a>
+  <a href="#jtbd">06 Jobs To Be Done</a>
+  <a href="#drivers">07 Decision Drivers</a>
+  <a href="#pain">08 Pain Point Analysis</a>
+  <a href="#opportunity">09 Opportunity Areas</a>
+  <a href="#principles">10 Design Principles &amp; Implications</a>
+  <a href="#appendix">11 Research Appendix</a>
+</nav>
+
+<main>
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Pre-Research Hypothesis Framework — Not a Report of Completed Research</div>
+    <h1>Country Delight Stays — User Study &amp; Customer Understanding</h1>
+    <p class="sub">Who are the users, why do they leave the city, how do they plan trips today, what frustrates them, and what's the opportunity? This document structures a set of testable hypotheses to answer those questions — it does not report findings from interviews or surveys that haven't happened yet.</p>
+    <div class="badge-row">
+      <span class="badge">● Hypothesis — reasoned, not measured</span>
+      <span class="badge">● Trend-grounded — connects to a cited secondary signal</span>
+      <span class="badge">No market sizing, no TAM/SAM/SOM, no competitor benchmarking</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="callout warn">
+    <h4>⚠ Read this before anything else</h4>
+    <p><b>No primary user research — interviews, surveys, or usability sessions — has been conducted for this document.</b> A "User Study" title implies real users were studied; that hasn't happened yet. Rather than invent sample sizes, fake quotes, or fabricated frequency/severity data to make this look like completed research, this document is built and labeled as what it actually is: a structured hypothesis framework — reasoned from behavioural logic and a handful of legitimate secondary trend signals — designed to be tested by real interviews (Section 11), not treated as a finding.</p>
+    <div class="legend-key">
+      <span><span class="dot hyp"></span>HYPOTHESIS — reasoning only, no external grounding</span>
+      <span><span class="dot trend"></span>TREND-GROUNDED — connects to a cited secondary source, still not primary user data</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 01 EXEC SUMMARY ============ -->
+<section id="exec">
+  <div class="wrap">
+    <span class="eyebrow">01 — Executive Summary</span>
+    <h2>What we're hypothesizing, and how confident we are in it</h2>
+    <div class="grid grid-2" style="margin-bottom:16px;">
+      <div class="card"><h4>Major hypothesized patterns</h4><p><span class="pill hyp">Hyp.</span> Trip planning for short/nature getaways is high-effort relative to the trip's own length — people spend disproportionate time comparing options for a 1–2 day trip. <span class="pill trend">Trend</span> Staycation and workcation demand is real and rising nationally (Statista, Forbes Advisor India).</p></div>
+      <div class="card"><h4>Biggest hypothesized unmet need</h4><p><span class="pill hyp">Hyp.</span> A trusted, short shortlist beats an exhaustive search — decision fatigue, not lack of options, is the likely core frustration.</p></div>
+      <div class="card"><h4>Most promising segment (hypothesis)</h4><p><span class="pill hyp">Hyp.</span> Families and young professionals seeking short, nature-based trips with minimal planning effort — same segment surfaced independently in the Market Assessment funnel, now approached from the behaviour side.</p></div>
+      <div class="card"><h4>Key product opportunities</h4><p><span class="pill hyp">Hyp.</span> Curated shortlists over search, one-day itineraries as a first-class format, and family/pet-friendly filtering as a trust signal, not just a feature.</p></div>
+    </div>
+    <div class="callout hyp"><h4>Confidence level for this entire section</h4><p>Low-to-moderate. These are informed hypotheses built from general travel-behaviour logic and a few cited secondary trends — not validated against actual Country Delight customers or Mumbai travelers. Treat this executive summary as a set of things to go test, not a set of conclusions.</p></div>
+  </div>
+</section>
+
+<!-- ============ 02 METHODOLOGY ============ -->
+<section class="alt" id="method">
+  <div class="wrap">
+    <span class="eyebrow">02 — Research Methodology</span>
+    <h2>What was actually done here — and what wasn't</h2>
+    <div class="grid grid-2">
+      <div class="card"><h4>Research objectives (proposed, not yet answered)</h4><p>Who are the users? Why do they leave the city? How do they currently plan trips? What frustrates them? What's the improvement opportunity? This document proposes a framework to answer these — real research is still needed.</p></div>
+      <div class="card"><h4>Interview methodology</h4><p><b>None conducted.</b> Section 11 proposes an interview guide for the next phase — semi-structured, 8–12 participants per hypothesized segment, mix of recent short-trip takers and non-travelers.</p></div>
+      <div class="card"><h4>Secondary research used</h4><p>A small number of cited, publicly available behavioural trend signals: staycation/workcation adoption (Statista), remote-work prevalence (Forbes Advisor India), corporate-outing packages as an existing booking channel (observed in market scan), digital-detox travel growth (Mordor Intelligence). These describe directional trends, not Country Delight's specific customers.</p></div>
+      <div class="card"><h4>Sample demographics</h4><p><b>Not applicable — no sample exists yet.</b> A target sample profile for future research is proposed in Section 11 instead of a fabricated one here.</p></div>
+      <div class="card"><h4>Research limitations</h4><p>Everything in Sections 3–10 is inference, not measurement. Segment sizes, pain-point frequency, decision-driver rankings, and archetype behaviours are all untested. Real user variation could look meaningfully different from what's hypothesized here.</p></div>
+      <div class="card"><h4>Confidence levels</h4><p>Applied per-section throughout: <span class="pill hyp">Hypothesis</span> for pure reasoning, <span class="pill trend">Trend-grounded</span> where a cited secondary source supports the direction (not the specific claim about Country Delight's customers).</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 SEGMENTATION ============ -->
+<section id="segments">
+  <div class="wrap">
+    <span class="eyebrow">03 — User Segments &amp; Archetypes</span>
+    <h2>Eight behavioural segments, seven motivational archetypes</h2>
+    <p class="lead">Segments group people by how they likely behave day-to-day; archetypes describe the underlying motivation within a booking. Both are hypotheses to test in interviews, not measured findings. "Families" and "Parents with Children" were merged — same behavioural pattern.</p>
+    <div class="grid grid-4">
+      <div class="seg-card"><div class="seg-top"><h4>Young Professionals</h4></div><div class="seg-body">
+        <div class="f"><b>Frequency:</b> Frequent, spontaneous</div><div class="f"><b>Duration:</b> Day trip / 1 night</div><div class="f"><b>Budget:</b> Mid-market</div><div class="f"><b>Planning style:</b> Last-minute, social-media-driven</div><div class="f"><b>Pain point:</b> Decision fatigue from too many options</div><div class="f"><b>Decision maker:</b> Self or friend group</div>
+      </div></div>
+      <div class="seg-card"><div class="seg-top"><h4>Couples</h4></div><div class="seg-body">
+        <div class="f"><b>Frequency:</b> Occasional, occasion-driven</div><div class="f"><b>Duration:</b> 1–2 nights</div><div class="f"><b>Budget:</b> Mid-to-premium</div><div class="f"><b>Planning style:</b> Jointly researched, privacy-prioritized</div><div class="f"><b>Pain point:</b> Crowded, non-private venues</div><div class="f"><b>Decision maker:</b> Joint</div>
+      </div></div>
+      <div class="seg-card"><div class="seg-top"><h4>Families / Parents with Kids</h4></div><div class="seg-body">
+        <div class="f"><b>Frequency:</b> Regular, school-holiday-aligned</div><div class="f"><b>Duration:</b> Day trip to 2 nights</div><div class="f"><b>Budget:</b> Mid-market</div><div class="f"><b>Planning style:</b> Safety and hygiene-first research</div><div class="f"><b>Pain point:</b> Uncertainty about child-friendliness</div><div class="f"><b>Decision maker:</b> Parents, often mother-led research</div>
+      </div></div>
+      <div class="seg-card"><div class="seg-top"><h4>Friend Groups</h4></div><div class="seg-body">
+        <div class="f"><b>Frequency:</b> Occasional, plan-dependent</div><div class="f"><b>Duration:</b> 1–2 nights</div><div class="f"><b>Budget:</b> Value-to-mid</div><div class="f"><b>Planning style:</b> Group-chat consensus, slow to finalize</div><div class="f"><b>Pain point:</b> Coordinating group availability and budget</div><div class="f"><b>Decision maker:</b> Diffuse — group consensus</div>
+      </div></div>
+      <div class="seg-card"><div class="seg-top"><h4>Pet Parents</h4></div><div class="seg-body">
+        <div class="f"><b>Frequency:</b> Constrained by pet logistics</div><div class="f"><b>Duration:</b> Day trip preferred</div><div class="f"><b>Budget:</b> Mid-market</div><div class="f"><b>Planning style:</b> Heavy pre-filtering for pet policy</div><div class="f"><b>Pain point:</b> Very few reliably pet-friendly options</div><div class="f"><b>Decision maker:</b> Self, pet-need-driven</div>
+      </div></div>
+      <div class="seg-card"><div class="seg-top"><h4>Corporate Teams</h4></div><div class="seg-body">
+        <div class="f"><b>Frequency:</b> Periodic, budget-cycle driven</div><div class="f"><b>Duration:</b> Day trip / half-day</div><div class="f"><b>Budget:</b> Set by admin/HR budget</div><div class="f"><b>Planning style:</b> Admin-booked, package-based</div><div class="f"><b>Pain point:</b> Needs group logistics handled end-to-end</div><div class="f"><b>Decision maker:</b> HR/admin, not the attendees</div>
+      </div></div>
+      <div class="seg-card"><div class="seg-top"><h4>Solo Travellers</h4></div><div class="seg-body">
+        <div class="f"><b>Frequency:</b> Irregular</div><div class="f"><b>Duration:</b> Day trip to 1 night</div><div class="f"><b>Budget:</b> Budget-to-mid</div><div class="f"><b>Planning style:</b> Independent research, safety-conscious</div><div class="f"><b>Pain point:</b> Safety and value perception travelling alone</div><div class="f"><b>Decision maker:</b> Self</div>
+      </div></div>
+      <div class="seg-card"><div class="seg-top"><h4>Senior Couples</h4></div><div class="seg-body">
+        <div class="f"><b>Frequency:</b> Occasional</div><div class="f"><b>Duration:</b> 1–2 nights</div><div class="f"><b>Budget:</b> Mid-to-premium</div><div class="f"><b>Planning style:</b> Comfort and accessibility-first</div><div class="f"><b>Pain point:</b> Unclear accessibility/mobility information</div><div class="f"><b>Decision maker:</b> Joint</div>
+      </div></div>
+    </div>
+    <p style="font-size:12px;color:var(--grey);margin-top:14px;">All fields above are <span class="pill hyp">Hypothesis</span> — reasoned segment sketches to test in interviews, not measured behaviour.</p>
+
+    <h3>Motivational archetypes</h3>
+    <p class="lead">Quotes below are illustrative — representing a hypothesized viewpoint, not verbatim from real people, since no interviews have been conducted yet.</p>
+    <div class="grid grid-3">
+      <div class="arch-card"><div class="tag">Archetype</div><h4>The Burnt-out Professional</h4>
+        <div class="field"><b>Goals:</b> Recharge fast, minimal effort</div><div class="field"><b>Frustrations:</b> No time to plan, decision fatigue</div><div class="field"><b>Behaviour:</b> Last-minute, spontaneous, mobile-first</div><div class="field"><b>Expectations:</b> One-tap, trusted option</div>
+        <div class="quote">"I don't want to plan a trip, I want someone to have already planned it for me."</div><div class="quote-label">Illustrative, not a real quote</div>
+        <div class="field"><b>Opportunity:</b> One-day itinerary, bookable in minutes</div>
+      </div>
+      <div class="arch-card"><div class="tag">Archetype</div><h4>The Weekend Explorer</h4>
+        <div class="field"><b>Goals:</b> Discover new short-radius destinations regularly</div><div class="field"><b>Frustrations:</b> Repeats the same 2-3 places out of familiarity</div><div class="field"><b>Behaviour:</b> Active on Instagram, plans a few days ahead</div><div class="field"><b>Expectations:</b> Fresh, curated suggestions</div>
+        <div class="quote">"I've been to Lonavala a dozen times — show me something new I can actually trust."</div><div class="quote-label">Illustrative, not a real quote</div>
+        <div class="field"><b>Opportunity:</b> Rotating curated destination suggestions</div>
+      </div>
+      <div class="arch-card"><div class="tag">Archetype</div><h4>The Family Planner</h4>
+        <div class="field"><b>Goals:</b> Safe, hassle-free outing the whole family enjoys</div><div class="field"><b>Frustrations:</b> Uncertainty about kid-friendliness and hygiene</div><div class="field"><b>Behaviour:</b> Researches extensively before committing</div><div class="field"><b>Expectations:</b> Clear, upfront information</div>
+        <div class="quote">"I need to know it's safe and clean before I even think about whether it's fun."</div><div class="quote-label">Illustrative, not a real quote</div>
+        <div class="field"><b>Opportunity:</b> Explicit family-safety and hygiene signals in curation</div>
+      </div>
+      <div class="arch-card"><div class="tag">Archetype</div><h4>The Experience Collector</h4>
+        <div class="field"><b>Goals:</b> Distinctive, shareable experiences</div><div class="field"><b>Frustrations:</b> Generic resorts that look like everywhere else</div><div class="field"><b>Behaviour:</b> Instagram-driven discovery and sharing</div><div class="field"><b>Expectations:</b> Something worth posting about</div>
+        <div class="quote">"If it looks like every other resort on Instagram, why would I go?"</div><div class="quote-label">Illustrative, not a real quote</div>
+        <div class="field"><b>Opportunity:</b> Design distinct, nameable experience formats</div>
+      </div>
+      <div class="arch-card"><div class="tag">Archetype</div><h4>The Nature Seeker</h4>
+        <div class="field"><b>Goals:</b> Genuine, unpolished connection with nature</div><div class="field"><b>Frustrations:</b> Overly commercialized "nature" experiences</div><div class="field"><b>Behaviour:</b> Seeks authenticity over convenience</div><div class="field"><b>Expectations:</b> Real farms, real people, not a staged set</div>
+        <div class="quote">"I don't want a theme park version of a farm — I want the real thing."</div><div class="quote-label">Illustrative, not a real quote</div>
+        <div class="field"><b>Opportunity:</b> Lead with authenticity, not polish, in curation criteria</div>
+      </div>
+      <div class="arch-card"><div class="tag">Archetype</div><h4>The Celebration Planner</h4>
+        <div class="field"><b>Goals:</b> Make a specific occasion memorable</div><div class="field"><b>Frustrations:</b> Generic packages that don't feel personal</div><div class="field"><b>Behaviour:</b> Plans further ahead than other archetypes</div><div class="field"><b>Expectations:</b> Customization options</div>
+        <div class="quote">"It's our anniversary — I don't want the same package everyone else gets."</div><div class="quote-label">Illustrative, not a real quote</div>
+        <div class="field"><b>Opportunity:</b> Light customization layer on top of curated formats</div>
+      </div>
+      <div class="arch-card" style="grid-column:span 1;"><div class="tag">Archetype</div><h4>The Convenience-First Traveller</h4>
+        <div class="field"><b>Goals:</b> Zero planning effort, maximum comfort</div><div class="field"><b>Frustrations:</b> Multi-step booking processes</div><div class="field"><b>Behaviour:</b> Will pay more to avoid effort entirely</div><div class="field"><b>Expectations:</b> End-to-end handled, including transport</div>
+        <div class="quote">"Just tell me where to be and when — handle the rest."</div><div class="quote-label">Illustrative, not a real quote</div>
+        <div class="field"><b>Opportunity:</b> Fully bundled, zero-decision premium tier</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 TRAVEL BEHAVIOUR ============ -->
+<section class="alt" id="behaviour">
+  <div class="wrap">
+    <span class="eyebrow">04 — Travel Behaviour</span>
+    <h2>Hypothesized patterns, not measured frequencies</h2>
+    <div class="grid grid-3" style="margin-bottom:20px;">
+      <div class="card"><h4>When they travel</h4><p><span class="pill hyp">Hyp.</span> Weekends and long weekends dominate; monsoon and winter are likely seasonal peaks for nature destinations near Mumbai.</p></div>
+      <div class="card"><h4>Who they travel with</h4><p><span class="pill hyp">Hyp.</span> Mostly group travel (family or friends) rather than solo, given the destinations involved (farm/nature experiences skew social).</p></div>
+      <div class="card"><h4>How far they travel</h4><p><span class="pill hyp">Hyp.</span> Day-trip and short-getaway segments likely stay under 150km; distance tolerance probably rises with trip duration and group size.</p></div>
+      <div class="card"><h4>Preferred transportation</h4><p><span class="pill hyp">Hyp.</span> Self-drive or private cab dominates for family/couple segments; public transport more common for solo/budget-conscious segments.</p></div>
+      <div class="card"><h4>Preferred accommodation</h4><p><span class="pill hyp">Hyp.</span> For day trips, accommodation is often irrelevant — the "resort day-pass" model (pool/amenities without overnight stay) may matter more than lodging itself.</p></div>
+      <div class="card"><h4>Preferred activities</h4><p><span class="pill hyp">Hyp.</span> Passive relaxation (pool, food) and light nature activity (walks, farm visits) likely outweigh high-exertion adventure for the family/couple segments.</p></div>
+    </div>
+    <div class="chart-card"><h4>Hypothesized relative preference intensity, by segment</h4><div class="note">Illustrative comparison of reasoning above, not measured survey data — no percentages implied.</div>
+      <div class="chart-wrap"><canvas id="behaviourChart"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 JOURNEY ============ -->
+<section id="journey">
+  <div class="wrap">
+    <span class="eyebrow">05 — Trip Planning Journey</span>
+    <h2>Ten stages, mapped as hypotheses to validate</h2>
+    <div class="journey-step"><h4>1. Need arises <span class="pill hyp">Hyp.</span></h4>
+      <div class="journey-grid">
+        <div><span class="k">Goal</span>Recognize the need for a break</div><div><span class="k">Emotion</span>Restlessness, fatigue</div><div><span class="k">Tools</span>None yet — internal trigger</div>
+        <div><span class="k">Drop-off risk</span>Need fades without an easy next step</div><div><span class="k">Opportunity</span>Prompt at the right moment (e.g. after a stressful week signal)</div><div><span class="k">Questions</span>"Where could I even go for just a day?"</div>
+      </div></div>
+    <div class="journey-step"><h4>2. Search <span class="pill hyp">Hyp.</span></h4>
+      <div class="journey-grid">
+        <div><span class="k">Goal</span>Find candidate destinations</div><div><span class="k">Emotion</span>Mild overwhelm</div><div><span class="k">Tools</span>Google, Instagram</div>
+        <div><span class="k">Drop-off risk</span>Too many low-quality/unclear results</div><div><span class="k">Opportunity</span>Feeling-first entry point instead of destination search</div><div><span class="k">Questions</span>"Which of these are actually good?"</div>
+      </div></div>
+    <div class="journey-step"><h4>3. Research <span class="pill hyp">Hyp.</span></h4>
+      <div class="journey-grid">
+        <div><span class="k">Goal</span>Validate quality and fit</div><div><span class="k">Emotion</span>Skepticism</div><div><span class="k">Tools</span>Reviews, Instagram, friends</div>
+        <div><span class="k">Drop-off risk</span>Fake or inconsistent reviews erode trust</div><div><span class="k">Opportunity</span>Verified curation removes this step almost entirely</div><div><span class="k">Questions</span>"Is this actually as good as the photos?"</div>
+      </div></div>
+    <div class="journey-step"><h4>4. Comparison <span class="pill hyp">Hyp.</span></h4>
+      <div class="journey-grid">
+        <div><span class="k">Goal</span>Narrow to a shortlist</div><div><span class="k">Emotion</span>Decision fatigue</div><div><span class="k">Tools</span>Multiple browser tabs, OTAs</div>
+        <div><span class="k">Drop-off risk</span>Abandon planning altogether from fatigue</div><div><span class="k">Opportunity</span>Pre-curated shortlist instead of open comparison</div><div><span class="k">Questions</span>"Which one is actually worth it?"</div>
+      </div></div>
+    <div class="journey-step"><h4>5. Decision <span class="pill hyp">Hyp.</span></h4>
+      <div class="journey-grid">
+        <div><span class="k">Goal</span>Commit to one option</div><div><span class="k">Emotion</span>Relief, mild anxiety about the choice</div><div><span class="k">Tools</span>Group chat consensus</div>
+        <div><span class="k">Drop-off risk</span>Group can't agree, plan stalls</div><div><span class="k">Opportunity</span>Trust signal reduces second-guessing</div><div><span class="k">Questions</span>"Are we sure about this one?"</div>
+      </div></div>
+    <div class="journey-step"><h4>6. Booking <span class="pill hyp">Hyp.</span></h4>
+      <div class="journey-grid">
+        <div><span class="k">Goal</span>Complete the transaction</div><div><span class="k">Emotion</span>Wariness of hidden costs</div><div><span class="k">Tools</span>OTA checkout, direct call</div>
+        <div><span class="k">Drop-off risk</span>Unclear pricing or cancellation terms</div><div><span class="k">Opportunity</span>Transparent, all-in pricing</div><div><span class="k">Questions</span>"Is this the final price?"</div>
+      </div></div>
+    <div class="journey-step"><h4>7. Travel <span class="pill hyp">Hyp.</span></h4>
+      <div class="journey-grid">
+        <div><span class="k">Goal</span>Get there smoothly</div><div><span class="k">Emotion</span>Anticipation, mild logistics stress</div><div><span class="k">Tools</span>Maps, own vehicle</div>
+        <div><span class="k">Drop-off risk</span>Traffic/weather sours the mood before arrival</div><div><span class="k">Opportunity</span>Bundled transport removes this burden</div><div><span class="k">Questions</span>"How bad will traffic be?"</div>
+      </div></div>
+    <div class="journey-step"><h4>8. Experience <span class="pill hyp">Hyp.</span></h4>
+      <div class="journey-grid">
+        <div><span class="k">Goal</span>Get the outcome they came for (rest, bonding, nature)</div><div><span class="k">Emotion</span>Hoped-for: delight; risk: disappointment</div><div><span class="k">Tools</span>None — the experience itself</div>
+        <div><span class="k">Drop-off risk</span>Reality doesn't match expectation set during research</div><div><span class="k">Opportunity</span>Curation closes the expectation gap structurally</div><div><span class="k">Questions</span>"Was this worth it?"</div>
+      </div></div>
+    <div class="journey-step"><h4>9. Sharing <span class="pill hyp">Hyp.</span></h4>
+      <div class="journey-grid">
+        <div><span class="k">Goal</span>Tell others, post about it</div><div><span class="k">Emotion</span>Pride, nostalgia</div><div><span class="k">Tools</span>Instagram, WhatsApp groups</div>
+        <div><span class="k">Drop-off risk</span>Nothing distinctive enough to share</div><div><span class="k">Opportunity</span>Design a distinct, nameable experience (not a generic resort)</div><div><span class="k">Questions</span>"What made this different?"</div>
+      </div></div>
+    <div class="journey-step"><h4>10. Repeat <span class="pill hyp">Hyp.</span></h4>
+      <div class="journey-grid">
+        <div><span class="k">Goal</span>Decide whether to come back / recommend</div><div><span class="k">Emotion</span>Trust (or its absence)</div><div><span class="k">Tools</span>Memory, word of mouth</div>
+        <div><span class="k">Drop-off risk</span>No reason to return to the same source vs. researching fresh next time</div><div><span class="k">Opportunity</span>Compounding trust — same mechanism as the existing Country Delight relationship</div><div><span class="k">Questions</span>"Would I do this again, and with the same source?"</div>
+      </div></div>
+  </div>
+</section>
+
+<!-- ============ 06 JTBD ============ -->
+<section class="alt" id="jtbd">
+  <div class="wrap">
+    <span class="eyebrow">06 — Jobs To Be Done</span>
+    <h2>Hypothesized ranking, to validate via card-sort or survey</h2>
+    <div class="tablewrap"><table>
+      <tr><th>Rank (hypothesis)</th><th>Job</th><th>Statement</th></tr>
+      <tr><td class="num">1</td><td>Escape the city</td><td>When I feel burned out by traffic, pollution and noise, I want a nearby nature escape, so I can recharge without taking a long vacation.</td></tr>
+      <tr><td class="num">2</td><td>Spend quality time / family bonding</td><td>When my family's week is full of separate routines, I want a shared nature experience, so we reconnect without distractions.</td></tr>
+      <tr><td class="num">3</td><td>Relax / disconnect</td><td>When I've been constantly reachable, I want a low-stimulation nature setting, so I can genuinely switch off.</td></tr>
+      <tr><td class="num">4</td><td>Reconnect with nature</td><td>When my life feels entirely indoors and digital, I want authentic outdoor time, so I feel physically and mentally restored.</td></tr>
+      <tr><td class="num">5</td><td>Celebrate</td><td>When it's a birthday or anniversary, I want a distinctive setting, so the occasion feels special.</td></tr>
+      <tr><td class="num">6</td><td>Children's outdoor experiences</td><td>When my kids have never seen a farm, I want a safe, authentic visit, so they understand where food comes from.</td></tr>
+      <tr><td class="num">7</td><td>Adventure</td><td>When I want a physical challenge, I want an accessible trek or activity, so I feel a sense of accomplishment.</td></tr>
+      <tr><td class="num">8</td><td>Digital detox</td><td>When I feel phone-dependent, I want an environment that makes disconnecting easy, so I don't have to rely on willpower alone.</td></tr>
+      <tr><td class="num">9</td><td>Pet outing</td><td>When my pet needs a change of scenery too, I want a genuinely pet-friendly destination, so I don't have to choose between my pet and my own break.</td></tr>
+      <tr><td class="num">10</td><td>Romantic getaway</td><td>When my partner and I need uninterrupted time, I want privacy and quiet, so we can reconnect.</td></tr>
+    </table></div>
+    <p style="font-size:12px;color:var(--grey);">Ranking is a reasoned hypothesis based on how often each job appeared, implicitly or explicitly, across the segments in Section 3 — not derived from any scoring exercise with real users.</p>
+
+    <h3>Why these jobs get sought — functional, emotional, social, aspirational</h3>
+    <div class="grid grid-2">
+      <div class="motiv-card"><h4>Functional</h4><div class="f"><b>Why sought:</b> A practical need — rest, a change of scenery, air quality.</div><div class="f"><b>Typical occasions:</b> Routine weekend, post-work-stress.</div></div>
+      <div class="motiv-card"><h4>Emotional</h4><div class="f"><b>Why sought:</b> To feel calm, restored, or reconnected.</div><div class="f"><b>Typical occasions:</b> Burnout, major life stress, need to "reset."</div></div>
+      <div class="motiv-card"><h4>Social</h4><div class="f"><b>Why sought:</b> To strengthen relationships — family, friends, partner.</div><div class="f"><b>Typical occasions:</b> Family time deficit, friend-group reunions.</div></div>
+      <div class="motiv-card"><h4>Aspirational</h4><div class="f"><b>Why sought:</b> To be the kind of person/family who does this.</div><div class="f"><b>Typical occasions:</b> Identity-driven choices, social sharing.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 DECISION DRIVERS ============ -->
+<section id="drivers">
+  <div class="wrap">
+    <span class="eyebrow">07 — Decision Drivers</span>
+    <h2>What likely influences the booking decision, ranked as hypothesis</h2>
+    <div class="chart-card" style="margin-bottom:16px;"><h4>Hypothesized importance ranking</h4><div class="note">Reasoned ordering — not derived from a conjoint study or real ranking exercise.</div><div class="chart-wrap"><canvas id="driversChart"></canvas></div></div>
+    <div class="tablewrap"><table>
+      <tr><th>Driver</th><th>Why it likely matters</th></tr>
+      <tr><td>Trust</td><td>Recurring theme across every segment in Section 3 — the primary filter before price is even considered, hypothesis.</td></tr>
+      <tr><td>Safety</td><td>Especially salient for families, solo travellers, and senior couples.</td></tr>
+      <tr><td>Reviews</td><td>Primary trust proxy in the absence of a trusted brand — but undermined by the fake-review pain point (Section 8).</td></tr>
+      <tr><td>Price</td><td>A qualifier, not necessarily the top decision driver, once trust and safety are addressed.</td></tr>
+      <tr><td>Distance</td><td>Directly shapes which duration/destination bucket a trip falls into (Market Assessment, Section 7).</td></tr>
+      <tr><td>Child-friendliness</td><td>Binary filter for the Families segment — likely eliminates options entirely rather than just ranking them lower.</td></tr>
+      <tr><td>Pet-friendliness</td><td>Same pattern as above, for Pet Parents — a small but intensely loyal segment if served well.</td></tr>
+      <tr><td>Cleanliness / hygiene</td><td>Recurring concern for farm/nature-specific settings, given inconsistent quality perception.</td></tr>
+      <tr><td>Food quality</td><td>Especially relevant to farm-to-table-style experiences that are core to Country Delight's positioning.</td></tr>
+      <tr><td>Weather</td><td>Directly affects Sahyadri-corridor destinations (monsoon-heavy) — a seasonal driver, not constant.</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<!-- ============ 08 PAIN POINTS ============ -->
+<section class="alt" id="pain">
+  <div class="wrap">
+    <span class="eyebrow">08 — Pain Point Analysis</span>
+    <h2>Grouped by category, severity hypothesized not measured</h2>
+    <div class="tablewrap"><table>
+      <tr><th>Category</th><th>Pain point</th><th>Hyp. frequency</th><th>Hyp. severity</th><th>Current workaround</th><th>Opportunity</th></tr>
+      <tr><td>Planning</td><td>Decision fatigue from too many choices</td><td>High</td><td>Medium</td><td>Ask a friend, default to a known place</td><td>Curated shortlist</td></tr>
+      <tr><td>Discovery</td><td>Good options are scattered across Instagram/WhatsApp</td><td>High</td><td>Medium</td><td>Screenshot folders, saved posts</td><td>Central, searchable curation</td></tr>
+      <tr><td>Trust</td><td>Fake or inconsistent reviews</td><td>Medium</td><td>High</td><td>Cross-check multiple platforms</td><td>Verified/vetted-only listings</td></tr>
+      <tr><td>Booking</td><td>Hidden costs revealed late in checkout</td><td>Medium</td><td>Medium</td><td>Call ahead to confirm pricing</td><td>Transparent, all-in pricing upfront</td></tr>
+      <tr><td>Transportation</td><td>Uncertain last-mile connectivity to rural/farm sites</td><td>Medium</td><td>Medium</td><td>Self-drive by default</td><td>Bundled transport option</td></tr>
+      <tr><td>Accommodation</td><td>Marketing photos don't match reality</td><td>Medium</td><td>High</td><td>Heavy review cross-referencing</td><td>Curation with accountability</td></tr>
+      <tr><td>Food</td><td>Inconsistent food quality/hygiene at unbranded venues</td><td>Medium</td><td>High</td><td>Bring own snacks, ask locals</td><td>Vetted, farm-to-table food as a core promise</td></tr>
+      <tr><td>Time</td><td>Planning takes longer than the trip itself for short getaways</td><td>High</td><td>Medium</td><td>Give up and default to a familiar spot</td><td>One-day itinerary templates, pre-built</td></tr>
+      <tr><td>Cost</td><td>Uncertainty over whether the price is "worth it"</td><td>Medium</td><td>Medium</td><td>Compare across multiple OTAs</td><td>Clear value framing tied to curation</td></tr>
+      <tr><td>Information overload</td><td>Too many low-signal sources (ads, SEO content, forums)</td><td>High</td><td>Low-Medium</td><td>Trust word-of-mouth over search</td><td>One trusted source replaces many mediocre ones</td></tr>
+    </table></div>
+    <p style="font-size:12px;color:var(--grey);">Frequency/severity are directional judgments to prioritize what to test first — not measured data.</p>
+  </div>
+</section>
+
+<!-- ============ 12 OPPORTUNITY AREAS ============ -->
+<section class="alt" id="opportunity">
+  <div class="wrap">
+    <span class="eyebrow">09 — Opportunity Areas</span>
+    <h2>What's out there today, and nine hypothesized opportunities</h2>
+    <h3>Experience taxonomy (classification only, no sizing)</h3>
+    <div class="tree" style="margin-bottom:20px;">
+      <div class="tree-branch"><h4>Nature Experiences</h4><div class="tree-leaves"><span>Farm</span><span>Forest</span><span>Lake</span><span>River</span><span>Waterfall</span><span>Hills</span></div></div>
+      <div class="tree-branch"><h4>Adventure</h4><div class="tree-leaves"><span>Trek</span><span>Camping</span><span>Cycling</span><span>Kayaking</span></div></div>
+      <div class="tree-branch"><h4>Relaxation</h4><div class="tree-leaves"><span>Pool</span><span>Spa</span><span>Wellness</span><span>Slow living</span></div></div>
+      <div class="tree-branch"><h4>Family</h4><div class="tree-leaves"><span>Kids activities</span><span>Farm animals</span><span>Picnics</span></div></div>
+      <div class="tree-branch"><h4>Celebration</h4><div class="tree-leaves"><span>Birthdays</span><span>Anniversaries</span><span>Proposals</span></div></div>
+      <div class="tree-branch"><h4>Learning</h4><div class="tree-leaves"><span>Organic farming</span><span>Workshops</span><span>Stargazing</span></div></div>
+    </div>
+    <h3>Need → gap → solution</h3>
+    <div class="opp-card"><h4>Reduce planning effort</h4><div class="opp-row"><div><span class="k">User need</span>Get to a decision quickly</div><div><span class="k">Current gap</span>Open-ended search takes hours</div><div><span class="k">Product solution</span>Pre-built, bookable itineraries</div></div></div>
+    <div class="opp-card"><h4>Trusted recommendations</h4><div class="opp-row"><div><span class="k">User need</span>Confidence before committing</div><div><span class="k">Current gap</span>Unreliable reviews, unverifiable claims</div><div><span class="k">Product solution</span>Vetted-only curation with real accountability</div></div></div>
+    <div class="opp-card"><h4>Curated experiences over listings</h4><div class="opp-row"><div><span class="k">User need</span>A short, good shortlist</div><div><span class="k">Current gap</span>Marketplaces optimize for breadth, not fit</div><div><span class="k">Product solution</span>Feeling-first discovery flow (from prior discovery work)</div></div></div>
+    <div class="opp-card"><h4>Family-friendly outings</h4><div class="opp-row"><div><span class="k">User need</span>Certainty about safety and suitability for kids</div><div><span class="k">Current gap</span>Inconsistent, unclear information</div><div><span class="k">Product solution</span>Explicit family-fit signals in every listing</div></div></div>
+    <div class="opp-card"><h4>Pet-friendly escapes</h4><div class="opp-row"><div><span class="k">User need</span>Don't have to choose between pet and break</div><div><span class="k">Current gap</span>Very few reliably pet-friendly options exist</div><div><span class="k">Product solution</span>A dedicated, verified pet-friendly category</div></div></div>
+    <div class="opp-card"><h4>Seasonal experiences</h4><div class="opp-row"><div><span class="k">User need</span>Know what's good <i>right now</i></div><div><span class="k">Current gap</span>Static listings ignore monsoon/season fit</div><div><span class="k">Product solution</span>Season-aware curation and timing recommendations</div></div></div>
+    <div class="opp-card"><h4>One-day itineraries</h4><div class="opp-row"><div><span class="k">User need</span>A complete day trip without overnight complexity</div><div><span class="k">Current gap</span>Most platforms are built around overnight stays</div><div><span class="k">Product solution</span>Day-trip as a first-class, fully-designed format</div></div></div>
+    <div class="opp-card"><h4>Last-minute booking</h4><div class="opp-row"><div><span class="k">User need</span>Spontaneous plans still need to work</div><div><span class="k">Current gap</span>Availability and pricing often unclear close to the date</div><div><span class="k">Product solution</span>Real-time availability for curated near-radius options</div></div></div>
+    <div class="opp-card"><h4>Personalized recommendations</h4><div class="opp-row"><div><span class="k">User need</span>Suggestions that fit this specific trip's context</div><div><span class="k">Current gap</span>Generic "top 10" lists regardless of who's asking</div><div><span class="k">Product solution</span>Feeling + party-size + duration-driven recommendation logic</div></div></div>
+  </div>
+</section>
+
+<!-- ============ 13 DESIGN PRINCIPLES ============ -->
+<section id="principles">
+  <div class="wrap">
+    <span class="eyebrow">10 — Design Principles &amp; Implications</span>
+    <h2>What the research (hypotheses) implies for design</h2>
+    <div class="grid grid-3">
+      <div class="principle-card"><h4>Trust before choice</h4><p>Establish credibility before presenting options, not after.</p></div>
+      <div class="principle-card"><h4>Curate instead of listing</h4><p>A short, vetted shortlist beats an exhaustive search every time decision fatigue is the real problem.</p></div>
+      <div class="principle-card"><h4>Experiences over accommodation</h4><p>Lead with what someone will feel and do, not where they'll sleep.</p></div>
+      <div class="principle-card"><h4>Simplicity over abundance</h4><p>More options isn't the same as more value — resist the urge to maximize catalog size.</p></div>
+      <div class="principle-card"><h4>Family-first design</h4><p>Default to the more cautious, safety-conscious user; it rarely alienates anyone else.</p></div>
+      <div class="principle-card"><h4>Local authenticity</h4><p>Real farms and real people, not staged or overly commercialized versions of "nature."</p></div>
+      <div class="principle-card"><h4>Minimal planning effort</h4><p>Every additional decision the user has to make is a place they might abandon the flow.</p></div>
+    </div>
+    <h3>Observation → insight → implication</h3>
+    <div class="impl-flow"><div class="impl-box"><span class="k">Observation</span>Planning a short trip reportedly takes disproportionate time relative to the trip itself.</div><div class="impl-arrow">→</div><div class="impl-box"><span class="k">Insight</span>Decision fatigue, not lack of destinations, is the likely core frustration.</div><div class="impl-arrow">→</div><div class="impl-box"><span class="k">Implication</span>Offer a small set of trusted, curated recommendations instead of large search results.</div></div>
+    <div class="impl-flow"><div class="impl-box"><span class="k">Observation</span>Families hesitate without clear safety/hygiene signals.</div><div class="impl-arrow">→</div><div class="impl-box"><span class="k">Insight</span>Trust is a binary gate for this segment, not a ranking factor.</div><div class="impl-arrow">→</div><div class="impl-box"><span class="k">Implication</span>Make safety/hygiene signals explicit and prominent, not buried in reviews.</div></div>
+    <div class="impl-flow"><div class="impl-box"><span class="k">Observation</span>Most platforms are structured around overnight stays.</div><div class="impl-arrow">→</div><div class="impl-box"><span class="k">Insight</span>Day-trip demand is being served by generic resort day-passes, not purpose-built products.</div><div class="impl-arrow">→</div><div class="impl-box"><span class="k">Implication</span>Design day trips as a first-class product format, not an afterthought of the overnight model.</div></div>
+    <div class="impl-flow"><div class="impl-box"><span class="k">Observation</span>Pet-friendly and child-friendly needs act as hard filters, not preferences.</div><div class="impl-arrow">→</div><div class="impl-box"><span class="k">Insight</span>A wrong-fit option isn't just less appealing — it's disqualifying.</div><div class="impl-arrow">→</div><div class="impl-box"><span class="k">Implication</span>Build filtering as a trust mechanism up front, not a refinement step after browsing.</div></div>
+    <p style="font-size:12px;color:var(--grey);margin-top:6px;">Every observation above is itself a hypothesis pending validation — not a confirmed finding.</p>
+  </div>
+</section>
+
+<!-- ============ 15 APPENDIX ============ -->
+<section id="appendix">
+  <div class="wrap">
+    <span class="eyebrow">11 — Research Appendix</span>
+    <h2>What real research should look like next</h2>
+
+    <h3>Proposed interview guide</h3>
+    <div class="callout">
+      <ul style="padding-left:18px;font-size:13.5px;">
+        <li>Tell me about the last time you took a short trip or day trip out of Mumbai. Walk me through it from the moment you decided to go.</li>
+        <li>How did you decide where to go? What almost made you choose somewhere else?</li>
+        <li>What was the most frustrating or time-consuming part of planning it?</li>
+        <li>If you have kids/pets, how did that change your options or decision?</li>
+        <li>Would you have paid more for someone to have already vetted the option for you? How much more?</li>
+        <li>What would make you trust a new brand enough to book a nature/farm experience through them?</li>
+        <li>[If mentioned spontaneously] Have you used Airbnb / StayVista / MakeMyTrip / similar for this kind of trip? What worked or didn't?</li>
+      </ul>
+      <p style="margin-top:10px;font-size:12.5px;color:var(--grey);">Note on the last question: per the brief's own guideline, competitor mentions should only be explored if participants raise them naturally — not prompted as a comparison exercise.</p>
+    </div>
+
+    <h3>Proposed survey questions (for a larger-N validation pass)</h3>
+    <div class="callout">
+      <ul style="padding-left:18px;font-size:13.5px;">
+        <li>How many day trips or short (1-2 night) trips have you taken in the last 12 months?</li>
+        <li>Rank these decision factors in order of importance: trust, price, distance, reviews, child/pet-friendliness, food quality.</li>
+        <li>On a 1-5 scale, how much effort does planning a short trip typically take you?</li>
+        <li>Would you pay a premium for a pre-vetted, curated experience vs. planning it yourself? (Yes / No / Depends on amount)</li>
+      </ul>
+    </div>
+
+    <h3>Affinity mapping (process, not fabricated output)</h3>
+    <div class="callout"><p>Once real interviews are conducted, responses should be affinity-mapped by clustering similar quotes/observations into emergent themes — the segments and archetypes in Section 3 should be treated as a starting hypothesis set to be revised, merged, or discarded based on what actually emerges, not confirmed by fitting real answers into these pre-existing boxes.</p></div>
+
+    <h3>Open questions &amp; research gaps</h3>
+    <div class="grid grid-2">
+      <div class="card"><h4>Do these 8 segments actually hold up?</h4><p>They may collapse into fewer, or split further, once real interviews happen.</p></div>
+      <div class="card"><h4>Is "willing to pay for curation" real?</h4><p>The single most important untested claim in both this document and the Market Assessment.</p></div>
+      <div class="card"><h4>What do people actually call this category?</h4><p>We've been calling it "curated nature experiences" — untested whether that language means anything to a real user.</p></div>
+      <div class="card"><h4>How does Country Delight's existing brand trust actually transfer (if at all)?</h4><p>Assumed throughout prior work, never tested directly.</p></div>
+    </div>
+
+    <h3>Future validation studies</h3>
+    <div class="callout"><p>Recommended sequence: (1) 8-12 qualitative interviews across the hypothesized segments to pressure-test whether they're real and whether the pain points/archetypes resonate; (2) a short quantitative survey to validate frequency and willingness-to-pay claims at scale; (3) a small pilot (referenced in the Market Assessment's Hypotheses section) to observe actual behaviour rather than stated preference.</p></div>
+  </div>
+</section>
+
+<!-- ============ SOURCES ============ -->
+<section class="alt">
+  <div class="wrap">
+    <span class="eyebrow">Trend Sources Referenced</span>
+    <h2>The few secondary signals used to ground direction (not user-level data)</h2>
+    <div class="source-list">
+      <div class="source-item"><span class="t">Domestic tourism in India — Statista</span><a href="https://www.statista.com/topics/5733/domestic-tourism-in-india/" target="_blank">statista.com</a></div>
+      <div class="source-item"><span class="t">Remote Work Statistics — Forbes Advisor India</span><a href="https://www.forbes.com/advisor/in/business/remote-work-statistics/" target="_blank">forbes.com/advisor/in</a></div>
+      <div class="source-item"><span class="t">India Wellness Tourism Market — Mordor Intelligence</span><a href="https://www.mordorintelligence.com/industry-reports/india-wellness-tourism-market" target="_blank">mordorintelligence.com</a></div>
+      <div class="source-item"><span class="t">India Online Travel Market — Mordor Intelligence</span><a href="https://www.mordorintelligence.com/industry-reports/online-travel-market-in-india" target="_blank">mordorintelligence.com</a></div>
+    </div>
+  </div>
+</section>
+
+<footer>Country Delight Stays — User Study &amp; Customer Understanding. A pre-research hypothesis framework, not a report of completed user research. Every claim above should be treated as something to test, not something known. See the Market Assessment report for market sizing and industry data.</footer>
+</main>
+
+<script>
+const navToggle = document.getElementById('navtoggle');
+const sidenav = document.getElementById('sidenav');
+navToggle.addEventListener('click', () => sidenav.classList.toggle('open'));
+document.querySelectorAll('#sidenav a').forEach(a=>a.addEventListener('click',()=>sidenav.classList.remove('open')));
+
+window.addEventListener('load', () => {
+  const green='#1E8E5A', green2='#4CAF50', soil='#A9824C', forest='#0F3A28', light='#EFE3CE', purple='#7A5CB8';
+
+  new Chart(document.getElementById('behaviourChart'), {
+    type:'radar',
+    data:{ labels:['Relaxation','Nature/outdoor','Adventure','Food','Family activities','Photography/sharing'],
+      datasets:[
+        {label:'Families', data:[3,4,2,3,5,2], borderColor:green, backgroundColor:'rgba(30,142,90,.15)'},
+        {label:'Young Professionals', data:[4,3,3,3,1,5], borderColor:soil, backgroundColor:'rgba(169,130,76,.15)'},
+        {label:'Couples', data:[5,3,2,4,1,3], borderColor:purple, backgroundColor:'rgba(122,92,184,.15)'}
+      ] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom',labels:{font:{size:10.5}}}},
+      scales:{ r:{ min:0, max:5, ticks:{display:false}, pointLabels:{font:{size:10.5}} } } }
+  });
+
+  new Chart(document.getElementById('driversChart'), {
+    type:'bar',
+    data:{ labels:['Trust','Safety','Reviews','Price','Distance','Child-friendly','Pet-friendly','Cleanliness','Food quality','Weather'],
+      datasets:[{ label:'Hypothesized relative importance', data:[10,9,8,7,6,6,5,7,6,4], backgroundColor:green, borderRadius:6, maxBarThickness:26 }] },
+    options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+      scales:{ x:{ beginAtZero:true, max:10, grid:{color:'#eee'}, ticks:{display:false} }, y:{ grid:{display:false}, ticks:{font:{size:10.5}} } } }
+  });
+});
+</script>
+</body>
+</html>

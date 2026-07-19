@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Country Delight Stays — Product Discovery & Market Opportunity Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root{
+  --green:#1E8E5A;
+  --green-2:#4CAF50;
+  --off-white:#F8FAF8;
+  --dark:#1B1B1B;
+  --grey:#6B7280;
+  --soil:#A9824C;
+  --soil-light:#EFE3CE;
+  --forest:#0F3A28;
+  --white:#FFFFFF;
+  --border:rgba(27,27,27,0.09);
+  --shadow-sm:0 2px 8px rgba(15,58,40,0.06);
+  --shadow-md:0 12px 32px rgba(15,58,40,0.10);
+  --shadow-lg:0 24px 64px rgba(15,58,40,0.16);
+  --radius:20px;
+  --radius-sm:12px;
+  --maxw:1180px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;
+  background:var(--off-white);
+  color:var(--dark);
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:600;letter-spacing:-0.01em;color:var(--dark);}
+::selection{background:var(--green-2);color:#fff;}
+a{color:inherit;}
+img,svg{display:block;max-width:100%;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+@media(max-width:640px){.wrap{padding:0 20px;}}
+
+/* ---------- Progress bar ---------- */
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--green),var(--soil));z-index:9999;width:0%;transition:width .1s linear;}
+
+/* ---------- Sidebar nav ---------- */
+#sidenav{
+  position:fixed;top:0;left:0;height:100vh;width:264px;
+  background:rgba(248,250,248,0.86);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-right:1px solid var(--border);
+  z-index:900;padding:28px 18px;display:flex;flex-direction:column;
+  transform:translateX(0);transition:transform .35s ease;
+}
+#sidenav .brandmark{display:flex;align-items:center;gap:10px;padding:0 10px 22px 10px;border-bottom:1px solid var(--border);margin-bottom:16px;}
+#sidenav .brandmark .dot{width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(30,142,90,0.15);}
+#sidenav .brandmark span{font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--forest);}
+#navlist{list-style:none;overflow-y:auto;flex:1;padding-right:4px;}
+#navlist::-webkit-scrollbar{width:4px;}
+#navlist::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+#navlist li a{
+  display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--grey);
+  font-size:13.5px;font-weight:500;padding:9px 10px;border-radius:10px;transition:all .2s ease;
+  position:relative;
+}
+#navlist li a .n{font-variant-numeric:tabular-nums;font-size:11px;color:var(--soil);width:18px;flex-shrink:0;font-weight:700;}
+#navlist li a:hover{background:rgba(30,142,90,0.07);color:var(--dark);}
+#navlist li a.active{background:var(--green);color:#fff;font-weight:600;box-shadow:var(--shadow-sm);}
+#navlist li a.active .n{color:rgba(255,255,255,0.75);}
+#navtoggle{display:none;position:fixed;top:16px;left:16px;z-index:1000;background:var(--dark);color:#fff;border:none;width:44px;height:44px;border-radius:12px;align-items:center;justify-content:center;box-shadow:var(--shadow-md);}
+#navtoggle svg{width:20px;height:20px;}
+
+main{margin-left:264px;}
+@media(max-width:980px){
+  #sidenav{transform:translateX(-100%);width:78vw;max-width:300px;box-shadow:var(--shadow-lg);}
+  #sidenav.open{transform:translateX(0);}
+  main{margin-left:0;}
+  #navtoggle{display:flex;}
+}
+
+/* ---------- Section base ---------- */
+section{padding:120px 0;position:relative;}
+section.tight{padding:96px 0;}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--green);margin-bottom:18px;}
+.eyebrow::before{content:'';width:22px;height:2px;background:var(--soil);display:inline-block;}
+h2.sec-title{font-size:clamp(30px,4vw,46px);line-height:1.12;margin-bottom:18px;max-width:820px;}
+.sec-sub{font-size:17px;color:var(--grey);max-width:640px;margin-bottom:56px;}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0;}
+
+/* ---------- Hero ---------- */
+#cover{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  background:linear-gradient(180deg,#0F3A28 0%,#134430 46%,#1E8E5A 100%);
+  color:#fff;position:relative;overflow:hidden;padding:80px 0 40px;
+}
+#hero-illustration{position:absolute;inset:0;z-index:0;}
+.hero-content{position:relative;z-index:2;}
+.hero-eyebrow{display:inline-block;padding:8px 16px;border:1px solid rgba(255,255,255,.28);border-radius:100px;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:rgba(255,255,255,.92);margin-bottom:34px;backdrop-filter:blur(6px);}
+h1.hero-title{font-size:clamp(40px,7vw,84px);line-height:1.02;font-weight:600;color:#fff;max-width:920px;}
+h1.hero-title em{font-style:normal;color:#D9EFDF;}
+.hero-sub{font-family:'Inter',sans-serif;font-size:clamp(17px,2vw,21px);color:rgba(255,255,255,.82);max-width:560px;margin-top:28px;font-weight:400;line-height:1.55;}
+.hero-meta{display:flex;gap:40px;margin-top:56px;flex-wrap:wrap;}
+.hero-meta div{border-left:2px solid rgba(255,255,255,.3);padding-left:14px;}
+.hero-meta .k{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:4px;}
+.hero-meta .v{font-size:15px;font-weight:600;color:#fff;}
+.scroll-indicator{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;color:rgba(255,255,255,.7);z-index:2;}
+.scroll-indicator .mouse{width:24px;height:38px;border:2px solid rgba(255,255,255,.5);border-radius:14px;position:relative;}
+.scroll-indicator .mouse::before{content:'';position:absolute;top:6px;left:50%;transform:translateX(-50%);width:4px;height:8px;background:#fff;border-radius:3px;animation:scrolldown 1.8s infinite;}
+@keyframes scrolldown{0%{opacity:1;top:6px;}70%{opacity:0;top:20px;}100%{opacity:0;top:6px;}}
+.scroll-indicator span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+
+/* hills svg animation */
+.hill{transition:transform .2s ease-out;}
+
+/* ---------- Cards ---------- */
+.card{
+  background:#fff;border-radius:var(--radius);border:1px solid var(--border);
+  padding:32px;box-shadow:var(--shadow-sm);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease;
+}
+.card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);}
+.grid{display:grid;gap:24px;}
+.grid-2{grid-template-columns:repeat(2,1fr);}
+.grid-3{grid-template-columns:repeat(3,1fr);}
+.grid-4{grid-template-columns:repeat(4,1fr);}
+@media(max-width:900px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}}
+
+/* ---------- Executive summary ---------- */
+.strategy-card{position:relative;overflow:hidden;}
+.strategy-card .num{position:absolute;top:18px;right:24px;font-family:'Fraunces',serif;font-size:52px;color:var(--soil-light);font-weight:600;z-index:0;}
+.strategy-card h3{font-size:20px;margin-bottom:12px;position:relative;z-index:1;}
+.strategy-card p{color:var(--grey);font-size:15px;position:relative;z-index:1;}
+.recommendation-banner{
+  margin-top:32px;background:linear-gradient(120deg,var(--forest),var(--green));
+  border-radius:var(--radius);padding:44px;color:#fff;display:flex;gap:28px;align-items:flex-start;
+}
+.recommendation-banner .tag{flex-shrink:0;background:rgba(255,255,255,.15);border-radius:12px;padding:10px 14px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+.recommendation-banner p{font-size:18px;line-height:1.6;font-weight:500;}
+
+/* ---------- Quote cards (vision) ---------- */
+.quote-card{border-left:3px solid var(--soil);padding:28px 30px;background:#fff;border-radius:0 var(--radius-sm) var(--radius-sm) 0;box-shadow:var(--shadow-sm);}
+.quote-card .label{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:10px;}
+.quote-card p{font-family:'Fraunces',serif;font-size:19px;font-weight:500;color:var(--dark);line-height:1.5;}
+
+/* ---------- Timeline ---------- */
+.timeline{position:relative;padding-left:38px;}
+.timeline::before{content:'';position:absolute;left:11px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,var(--soil),var(--green),var(--forest));}
+.t-item{position:relative;margin-bottom:14px;}
+.t-item::before{content:'';position:absolute;left:-33px;top:22px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--green);z-index:1;}
+.t-item.final::before{background:var(--soil);border-color:var(--soil);}
+.t-head{cursor:pointer;background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px 24px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow-sm);transition:all .25s ease;}
+.t-head:hover{border-color:var(--green-2);}
+.t-head h4{font-size:18px;}
+.t-head .chev{transition:transform .3s ease;color:var(--grey);}
+.t-item.open .t-head .chev{transform:rotate(180deg);}
+.t-body{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+.t-item.open .t-body{max-height:260px;}
+.t-body-inner{padding:18px 24px 8px 24px;color:var(--grey);font-size:15px;line-height:1.65;}
+
+/* ---------- Market analysis cards ---------- */
+.market-card{display:flex;flex-direction:column;gap:14px;}
+.market-card .icon-badge{width:46px;height:46px;border-radius:12px;background:var(--soil-light);display:flex;align-items:center;justify-content:center;}
+.market-card .icon-badge svg{width:24px;height:24px;stroke:var(--forest);}
+.market-card h4{font-size:17px;}
+.market-card p{font-size:14.5px;color:var(--grey);}
+
+/* ---------- Consumer behaviour ---------- */
+.voice-card{background:#fff;border-radius:var(--radius-sm);padding:26px;border:1px solid var(--border);position:relative;}
+.voice-card::before{content:'\201C';position:absolute;top:6px;left:18px;font-family:'Fraunces',serif;font-size:56px;color:var(--soil-light);line-height:1;}
+.voice-card p.quote{font-family:'Fraunces',serif;font-size:18px;font-weight:500;margin-top:18px;color:var(--dark);}
+.voice-card p.tag{margin-top:14px;font-size:13px;color:var(--grey);}
+
+/* ---------- JTBD ---------- */
+.jtbd-card{background:#fff;border-radius:var(--radius);padding:28px;border:1px solid var(--border);box-shadow:var(--shadow-sm);}
+.jtbd-card .situ{color:var(--soil);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.jtbd-card p{font-size:16.5px;line-height:1.55;}
+.jtbd-card b{color:var(--green);}
+
+/* ---------- Personas ---------- */
+.persona-card{padding:0;overflow:hidden;}
+.persona-top{padding:26px 28px 18px;background:linear-gradient(135deg,var(--forest),var(--green));color:#fff;}
+.persona-top h4{font-size:20px;color:#fff;}
+.persona-top span{font-size:13px;color:rgba(255,255,255,.75);}
+.persona-body{padding:22px 28px 28px;}
+.persona-body .field{margin-bottom:14px;}
+.persona-body .field .lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--soil);margin-bottom:5px;}
+.persona-body .field p{font-size:14px;color:var(--grey);}
+
+/* ---------- Taxonomy tree ---------- */
+.tree{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.tree-node{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px 26px;box-shadow:var(--shadow-sm);text-align:center;font-weight:700;cursor:default;}
+.tree-node.root{background:var(--forest);color:#fff;font-size:18px;}
+.tree-line{width:2px;height:26px;background:var(--border);}
+.tree-branches{display:flex;gap:40px;margin-top:6px;flex-wrap:wrap;justify-content:center;}
+.branch{display:flex;flex-direction:column;align-items:center;}
+.branch-head{background:var(--soil-light);border:1px solid var(--border);border-radius:14px;padding:14px 22px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;}
+.branch-leaves{list-style:none;margin-top:14px;display:none;flex-direction:column;gap:8px;}
+.branch.open .branch-leaves{display:flex;}
+.branch-leaves li{background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px 18px;font-size:14px;color:var(--dark);text-align:center;}
+
+/* ---------- Competitors ---------- */
+.comp-group-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--soil);margin:44px 0 20px;}
+.comp-card{padding:26px;}
+.comp-card .comp-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.comp-card h4{font-size:19px;}
+.comp-card .swb{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.comp-card .swb div{font-size:13px;}
+.comp-card .swb .lbl{font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.comp-card .swb .s .lbl{color:var(--green);}
+.comp-card .swb .w .lbl{color:#B4442E;}
+.comp-card .opp{background:var(--soil-light);border-radius:10px;padding:12px 16px;font-size:13.5px;}
+.comp-card .opp .lbl{font-weight:700;font-size:11px;text-transform:uppercase;color:var(--forest);letter-spacing:.05em;margin-bottom:4px;}
+.comp-card .source{margin-top:12px;font-size:11.5px;color:var(--grey);}
+.comp-card .source a{color:var(--green);text-decoration:none;border-bottom:1px dotted var(--green);}
+
+/* ---------- Positioning matrix ---------- */
+.matrix-wrap{position:relative;background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:60px;box-shadow:var(--shadow-sm);}
+.matrix{position:relative;width:100%;aspect-ratio:16/10;border-left:2px solid var(--dark);border-bottom:2px solid var(--dark);}
+.axis-label{position:absolute;font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--grey);}
+.axis-label.top{top:-30px;left:50%;transform:translateX(-50%);}
+.axis-label.bottom{bottom:-30px;left:50%;transform:translateX(-50%);}
+.axis-label.left{left:-40px;top:50%;transform:translateY(-50%) rotate(-90deg);}
+.axis-label.right{right:0;top:-30px;}
+.matrix-dot{position:absolute;width:120px;transform:translate(-50%,-50%);text-align:center;padding:10px 8px;border-radius:12px;font-size:12px;font-weight:600;box-shadow:var(--shadow-sm);}
+.matrix-dot.cd{background:var(--green);color:#fff;font-weight:800;z-index:5;width:150px;box-shadow:var(--shadow-md);animation:pulse-dot 2.6s infinite;}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(30,142,90,.35),var(--shadow-md);}50%{box-shadow:0 0 0 14px rgba(30,142,90,0),var(--shadow-md);}}
+.matrix-dot.other{background:#fff;border:1px solid var(--border);color:var(--grey);}
+
+/* ---------- White space ---------- */
+.ws-row{display:grid;grid-template-columns:180px 1fr;gap:20px;align-items:center;padding:20px 0;border-bottom:1px solid var(--border);}
+.ws-row:last-child{border-bottom:none;}
+.ws-row h4{font-size:16px;}
+.ws-row p{font-size:14.5px;color:var(--grey);}
+.ws-row.highlight{background:var(--soil-light);border-radius:14px;padding:20px 22px;border-bottom:none;margin-top:8px;}
+.ws-row.highlight h4{color:var(--forest);}
+
+/* ---------- Why we win comparison ---------- */
+.win-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+@media(max-width:900px){.win-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:600px){.win-grid{grid-template-columns:1fr;}}
+.win-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px;text-align:center;}
+.win-card .ic{width:42px;height:42px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;color:#fff;font-weight:800;}
+.win-card h5{font-size:15px;margin-bottom:6px;}
+.win-card p{font-size:12.5px;color:var(--grey);}
+
+/* ---------- Flow diagram ---------- */
+.flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;justify-content:center;}
+.flow-step{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px 22px;width:210px;text-align:center;box-shadow:var(--shadow-sm);position:relative;}
+.flow-step .fnum{font-size:11px;font-weight:800;color:var(--soil);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+.flow-step h5{font-size:16px;margin-bottom:6px;}
+.flow-step p{font-size:12.5px;color:var(--grey);}
+.flow-arrow{display:flex;align-items:center;justify-content:center;width:44px;color:var(--soil);flex-shrink:0;}
+@media(max-width:900px){.flow-arrow{width:100%;height:30px;}.flow-arrow svg{transform:rotate(90deg);}}
+
+.feel-banner{background:var(--forest);color:#fff;border-radius:var(--radius);padding:56px;text-align:center;margin-bottom:56px;}
+.feel-banner .old{color:rgba(255,255,255,.5);font-size:16px;text-decoration:line-through;margin-bottom:14px;}
+.feel-banner .new{font-family:'Fraunces',serif;font-size:clamp(26px,4vw,40px);color:#fff;}
+
+/* ---------- Charts ---------- */
+.chart-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:32px;box-shadow:var(--shadow-sm);}
+.chart-card h4{font-size:16px;margin-bottom:4px;}
+.chart-card .chart-note{font-size:12.5px;color:var(--grey);margin-bottom:18px;}
+.chart-wrap{position:relative;height:280px;}
+.chart-sources{margin-top:16px;font-size:11.5px;color:var(--grey);line-height:1.6;}
+.chart-sources a{color:var(--green);text-decoration:none;}
+
+/* ---------- Stat strip ---------- */
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);}
+@media(max-width:900px){.stat-strip{grid-template-columns:repeat(2,1fr);}}
+.stat-cell{background:#fff;padding:30px 24px;}
+.stat-cell .val{font-family:'Fraunces',serif;font-size:32px;color:var(--forest);font-weight:600;}
+.stat-cell .lbl{font-size:12.5px;color:var(--grey);margin-top:6px;}
+.stat-cell .src{font-size:10.5px;color:var(--soil);margin-top:8px;}
+
+/* ---------- Conclusion ---------- */
+#conclusion{background:linear-gradient(180deg,#0F3A28,#134430);color:#fff;}
+#conclusion h2.sec-title,#conclusion h2.sec-title *{color:#fff;}
+#conclusion .eyebrow{color:#9BD9B4;}
+#conclusion .card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:#fff;}
+#conclusion .card p{color:rgba(255,255,255,.72);}
+#conclusion .card h3{color:#fff;}
+
+/* ---------- Sources section ---------- */
+#sources{background:#fff;}
+.source-list{columns:2;column-gap:48px;}
+@media(max-width:800px){.source-list{columns:1;}}
+.source-item{break-inside:avoid;margin-bottom:18px;font-size:13.5px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.source-item .stitle{font-weight:700;display:block;margin-bottom:3px;}
+.source-item a{color:var(--green);text-decoration:none;font-size:12.5px;word-break:break-all;}
+.source-item .note{color:var(--grey);font-size:12px;display:block;margin-top:3px;}
+.methodology{background:var(--soil-light);border-radius:var(--radius-sm);padding:24px 28px;margin-bottom:40px;font-size:14.5px;color:var(--forest);line-height:1.7;}
+
+footer{padding:60px 0;text-align:center;color:var(--grey);font-size:13px;}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important;}
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<button id="navtoggle" aria-label="Toggle navigation">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+
+<nav id="sidenav">
+  <div class="brandmark"><span class="dot"></span><span>Country Delight Stays</span></div>
+  <ul id="navlist">
+    <li><a href="#cover"><span class="n">00</span>Cover</a></li>
+    <li><a href="#exec-summary"><span class="n">01</span>Executive Summary</a></li>
+    <li><a href="#vision"><span class="n">02</span>Product Vision</a></li>
+    <li><a href="#evolution"><span class="n">03</span>Industry Evolution</a></li>
+    <li><a href="#market"><span class="n">04</span>Market Analysis</a></li>
+    <li><a href="#behaviour"><span class="n">05</span>Consumer Behaviour</a></li>
+    <li><a href="#jtbd"><span class="n">06</span>Jobs To Be Done</a></li>
+    <li><a href="#personas"><span class="n">07</span>Customer Personas</a></li>
+    <li><a href="#taxonomy"><span class="n">08</span>Experience Taxonomy</a></li>
+    <li><a href="#competitors"><span class="n">09</span>Competitor Landscape</a></li>
+    <li><a href="#positioning"><span class="n">10</span>Competitive Positioning</a></li>
+    <li><a href="#whitespace"><span class="n">11</span>White Space Analysis</a></li>
+    <li><a href="#why-win"><span class="n">12</span>Why We Win</a></li>
+    <li><a href="#opportunity"><span class="n">13</span>Product Opportunity</a></li>
+    <li><a href="#insight"><span class="n">14</span>Discovery Insight</a></li>
+    <li><a href="#conclusion"><span class="n">15</span>Conclusion</a></li>
+    <li><a href="#sources"><span class="n">16</span>Sources</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- ================= COVER ================= -->
+<section id="cover">
+  <svg id="hero-illustration" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#F8FAF8" stop-opacity="0.9"/>
+        <stop offset="100%" stop-color="#F8FAF8" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <circle cx="1160" cy="150" r="180" fill="url(#sunGlow)">
+      <animate attributeName="r" values="170;190;170" dur="6s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1160" cy="150" r="58" fill="#EFE3CE" opacity="0.9"/>
+    <path class="hill" d="M0,620 C220,540 380,560 620,610 C860,660 1040,560 1440,600 L1440,900 L0,900 Z" fill="#134430" opacity="0.55"/>
+    <path class="hill" d="M0,700 C260,630 460,700 720,680 C980,660 1180,730 1440,690 L1440,900 L0,900 Z" fill="#1E8E5A" opacity="0.55"/>
+    <path class="hill" d="M0,780 C300,730 620,800 900,760 C1140,726 1300,790 1440,760 L1440,900 L0,900 Z" fill="#4CAF50" opacity="0.5"/>
+    <g opacity="0.85">
+      <rect x="150" y="700" width="90" height="70" fill="#F8FAF8"/>
+      <polygon points="140,700 250,700 195,655" fill="#A9824C"/>
+      <rect x="185" y="730" width="20" height="40" fill="#134430"/>
+    </g>
+  </svg>
+  <div class="wrap hero-content">
+    <span class="hero-eyebrow">Product Discovery &amp; Market Opportunity Report</span>
+    <h1 class="hero-title">Country Delight <em>Stays</em></h1>
+    <h1 class="hero-title" style="font-size:clamp(24px,3.4vw,40px);margin-top:6px;">Curated Nature Experiences, Reimagined</h1>
+    <p class="hero-sub">Understanding the opportunity for curated nature experiences in India — and why Country Delight is positioned to build the trusted layer between the city and the land.</p>
+    <div class="hero-meta">
+      <div><div class="k">Prepared for</div><div class="v">Country Delight Leadership</div></div>
+      <div><div class="k">Prepared by</div><div class="v">Product Strategy &amp; Discovery</div></div>
+      <div><div class="k">Scope</div><div class="v">India Domestic Experience Market</div></div>
+    </div>
+  </div>
+  <div class="scroll-indicator"><div class="mouse"></div><span>Scroll to explore</span></div>
+</section>
+
+<!-- ================= EXECUTIVE SUMMARY ================= -->
+<section id="exec-summary">
+  <div class="wrap">
+    <span class="eyebrow reveal">01 — Executive Summary</span>
+    <h2 class="sec-title reveal">A trusted brand, extending its promise into a category of its own.</h2>
+    <p class="sec-sub reveal">Country Delight Stays is not a travel, tourism or hospitality product. It is the first mover in <b>Curated Nature Experiences</b> — a new category built on the same trust Country Delight has already earned through milk, dairy, fruits and vegetables. The adjacent-industry data below explains <em>why now</em>; it does not define what this product is.</p>
+
+    <div class="card reveal" style="border-left:4px solid var(--green);margin-bottom:40px;background:var(--soil-light);">
+      <h3 style="font-size:17px;margin-bottom:8px;color:var(--forest);">Category definition</h3>
+      <p style="color:var(--dark);">Country Delight is not entering hospitality, travel or tourism. It is extending its existing promise of healthy, authentic living beyond food — helping urban households reconnect with nature, family and slower living through trusted, curated <b>Nature Experiences</b>. Accommodation is one enabler inside that offering, never the product itself.</p>
+    </div>
+
+    <p class="sec-sub reveal" style="margin-top:-24px;margin-bottom:32px;font-size:15px;">The figures below come from adjacent industries — travel, wellness and agritourism research — cited only as evidence that urban demand for nature, wellness and slower living is real and growing. They describe the climate this category is emerging into, not the category itself.</p>
+
+    <div class="stat-strip reveal" style="margin-bottom:56px;">
+      <div class="stat-cell">
+        <div class="val">294.8 Cr</div>
+        <div class="lbl">Adjacent signal: domestic tourist visits in India, 2024 — up 17.5% year-on-year</div>
+        <div class="src">Source: India Tourism Data Compendium 2025, Ministry of Tourism (via IBEF)</div>
+      </div>
+      <div class="stat-cell">
+        <div class="val">$23.8 Bn</div>
+        <div class="lbl">Adjacent signal: India's overall travel &amp; tourism economy, 2025</div>
+        <div class="src">Source: IMARC Group, India Travel &amp; Tourism Market Report</div>
+      </div>
+      <div class="stat-cell">
+        <div class="val">15.4% CAGR</div>
+        <div class="lbl">Adjacent signal: India's farm/nature-based travel segment growth, 2025–2030 (fastest-growing country globally)</div>
+        <div class="src">Source: Grand View Research, India Agritourism Market Outlook</div>
+      </div>
+      <div class="stat-cell">
+        <div class="val">₹181 Cr</div>
+        <div class="lbl">Nearest adjacent benchmark: FY25 revenue of StayVista, a curated villa-rental platform (+29% YoY)</div>
+        <div class="src">Source: Entrackr / Registrar of Companies filings, March 2026</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card strategy-card reveal"><div class="num">01</div>
+        <h3>Why this product exists</h3>
+        <p>Domestic travel in India grew 17.5% year-on-year in 2024 to nearly 295 crore visits, and government data shows travellers moving toward shorter, more frequent trips rather than single annual holidays. Country Delight already sits inside the daily rhythm of urban Indian households through its milk and dairy delivery — it has permission to extend that trust into how those same families spend their weekends.</p>
+      </div>
+      <div class="card strategy-card reveal"><div class="num">02</div>
+        <h3>Why demand is shifting</h3>
+        <p>Independent research firms size India's wellness-travel demand between roughly $29–35 billion in 2025 depending on methodology, with digital-detox escapes the fastest-growing sub-category at a projected 17.3% CAGR through 2031. The Union Budget 2025–26 backed this shift directly, allocating an estimated $2.2 billion toward AYUSH-based wellness travel under the "Heal in India" initiative and cutting GST on wellness services from 18% to 5% — real policy evidence that reconnection and slow living are becoming mainstream priorities, not niche ones.</p>
+      </div>
+      <div class="card strategy-card reveal"><div class="num">03</div>
+        <h3>What opportunity exists</h3>
+        <p>The players closest to this white space — StayVista and SaffronStays — are villa-rental platforms, not curated-experience or trust brands, and StayVista's own FY25 filings show a business still building toward its first at-scale profitable year. Nobody occupies the specific position of a trusted, everyday consumer brand extending into curated nature experiences.</p>
+      </div>
+      <div class="card strategy-card reveal"><div class="num">04</div>
+        <h3>Key recommendation</h3>
+        <p>Country Delight Stays should not launch as a hotel-booking or villa-rental product. It should launch as a curated ecosystem of trusted nature experiences — starting with day experiences that require no overnight commitment, and expanding toward immersive weekend and workcation formats as trust and supply mature.</p>
+      </div>
+    </div>
+
+    <div class="recommendation-banner reveal">
+      <div class="tag">Bottom line</div>
+      <p>Country Delight has an earned right to trust that Airbnb, MakeMyTrip and StayVista do not have with the same households. The opportunity is not to out-list the accommodation platforms — it is to out-trust them, by building a category they aren't built to compete in.</p>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="section-divider"></div></div>
+
+<!-- ================= PRODUCT VISION ================= -->
+<section id="vision">
+  <div class="wrap">
+    <span class="eyebrow reveal">02 — Product Vision</span>
+    <h2 class="sec-title reveal">Before the product, the philosophy.</h2>
+    <p class="sec-sub reveal">Every strategic choice later in this report — taxonomy, positioning, discovery flow — traces back to these five statements.</p>
+    <div class="grid grid-2">
+      <div class="quote-card reveal"><div class="label">Mission</div><p>To make trusted, authentic nature experiences as easy to access as a daily glass of milk.</p></div>
+      <div class="quote-card reveal"><div class="label">Vision</div><p>A country where reconnecting with nature is a normal weekend habit, not a rare annual escape.</p></div>
+      <div class="quote-card reveal"><div class="label">Problem Statement</div><p>Urban Indians want to disconnect from city life, but discovery is fragmented, trust is inconsistent, and existing platforms optimise for choice, not for confidence.</p></div>
+      <div class="quote-card reveal"><div class="label">Opportunity Statement</div><p>A brand already trusted for what enters the home has a reasonable shot at extending that trust to how the family spends its weekends.</p></div>
+    </div>
+    <div class="quote-card reveal" style="margin-top:24px;border-left-color:var(--green);">
+      <div class="label">Core Philosophy</div>
+      <p>We are not selling accommodation. We are selling the feeling people are missing — reconnection with nature, family and themselves — and the experience is simply how they get there.</p>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="section-divider"></div></div>
+
+<!-- ================= INDUSTRY EVOLUTION ================= -->
+<section id="evolution">
+  <div class="wrap">
+    <span class="eyebrow reveal">03 — Industry Evolution</span>
+    <h2 class="sec-title reveal">Six stages that led here. Tap each to expand.</h2>
+    <div class="timeline reveal" id="timeline">
+      <div class="t-item">
+        <div class="t-head"><h4>1. Traditional Tourism</h4><span class="chev">⌄</span></div>
+        <div class="t-body"><div class="t-body-inner">Travel organised around fixed destinations — a city, a monument, a hill station — booked through agents and consumed as a checklist of sights rather than an experience of a place.</div></div>
+      </div>
+      <div class="t-item">
+        <div class="t-head"><h4>2. Destination Tourism</h4><span class="chev">⌄</span></div>
+        <div class="t-body"><div class="t-body-inner">The rise of branded hotels and organised circuits (Swadesh Darshan and similar government schemes) turned destinations into products, with infrastructure and marketing built around named places rather than named feelings.</div></div>
+      </div>
+      <div class="t-item">
+        <div class="t-head"><h4>3. Experience Economy</h4><span class="chev">⌄</span></div>
+        <div class="t-body"><div class="t-body-inner">Platforms like Airbnb Experiences and Thrillophilia shifted spend from lodging alone to activities — cooking classes, trails, workshops — sold as memories rather than nights booked.</div></div>
+      </div>
+      <div class="t-item">
+        <div class="t-head"><h4>4. Eco Tourism</h4><span class="chev">⌄</span></div>
+        <div class="t-body"><div class="t-body-inner">Sustainability entered mainstream travel decisions. Statista's India outlook notes travellers are increasingly seeking sustainable and eco-friendly options, and government schemes like Swadesh Darshan 2.0 explicitly foreground eco-friendly infrastructure.</div></div>
+      </div>
+      <div class="t-item">
+        <div class="t-head"><h4>5. Curated Nature Experiences</h4><span class="chev">⌄</span></div>
+        <div class="t-body"><div class="t-body-inner">Farm visits, fruit picking and rural immersion have become the fastest-growing segment tracked in this report's adjacent research — India's farm/nature-based travel segment is expanding from $206.8 million in 2024 toward $487.1 million by 2030 at a 15.4% CAGR (Grand View Research). This is the demand signal a dedicated nature-experience category can be built on.</div></div>
+      </div>
+      <div class="t-item final">
+        <div class="t-head"><h4>6. Country Delight Enters</h4><span class="chev">⌄</span></div>
+        <div class="t-body"><div class="t-body-inner">Not another entrant into travel, tourism or hospitality — a new category, built by a brand households already let into their kitchens every morning. Curation and trust are the product; accommodation is only one enabler inside it.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="section-divider"></div></div>
+
+<!-- ================= MARKET ANALYSIS ================= -->
+<section id="market">
+  <div class="wrap">
+    <span class="eyebrow reveal">04 — Demand Signals</span>
+    <h2 class="sec-title reveal">Eight forces feeding the Reconnection Economy.</h2>
+    <p class="sec-sub reveal">These are behaviours documented in adjacent industries — travel, wellness, work — cited as evidence of a shift in what urban India wants, not as a description of Country Delight's own category.</p>
+    <div class="grid grid-4 reveal">
+      <div class="card market-card"><div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 2v20M4 10h16M4 18h16"/></svg></div><h4>Urban burnout</h4><p>Rising density and always-on work culture are pushing short, frequent nature breaks over long annual holidays as the primary recovery pattern.</p></div>
+      <div class="card market-card"><div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div><h4>Experience-first thinking</h4><p>Statista and IBEF both note a shift toward off-the-beaten-path destinations and cultural immersion over checklist sightseeing among Indian travellers.</p></div>
+      <div class="card market-card"><div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 21c-4-4-8-7-8-11a8 8 0 0116 0c0 4-4 7-8 11z"/></svg></div><h4>Wellness-seeking</h4><p>Adjacent wellness-travel research values India's market at roughly $29–35 billion depending on the firm, with digital-detox escapes the fastest-growing sub-category at a projected 17.3% CAGR (2026–2031) — a strong proxy for appetite for slow living.</p></div>
+      <div class="card market-card"><div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg></div><h4>Eco-consciousness</h4><p>Government-backed river tourism, electric-solar boats and eco-circuits (Swadesh Darshan 2.0) signal state-level investment in sustainable, nature-linked infrastructure.</p></div>
+      <div class="card market-card"><div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg></div><h4>Staycations</h4><p>Statista's domestic tourism outlook explicitly names the surging popularity of staycations, driven by changing preferences and flexible work options.</p></div>
+      <div class="card market-card"><div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></div><h4>Work from anywhere</h4><p>An estimated 60–90 million Indians (roughly 10–15% of the workforce) were projected to work remotely by 2025, creating a base of professionals who can extend a weekend from a laptop bag.</p></div>
+      <div class="card market-card"><div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 2a5 5 0 015 5c0 3-5 10-5 10S7 10 7 7a5 5 0 015-5z"/></svg></div><h4>Sustainable living</h4><p>Farm-based, produce-linked experiences align naturally with a dairy and fresh-food brand already positioned around sustainable sourcing.</p></div>
+      <div class="card market-card"><div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M17 20h-2v-2a3 3 0 00-5.5-1.7M9 20H5v-2a3 3 0 015.5-1.7M12 11a3 3 0 100-6 3 3 0 000 6z"/></svg></div><h4>Family bonding</h4><p>Group and multi-generation travel remain a structural strength of Indian domestic travel behaviour, underpinning demand for farm and nature formats built for families rather than solo travellers.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="section-divider"></div></div>
+
+<!-- ================= CHARTS SECTION (part of market analysis, data-backed) ================= -->
+<section class="tight" id="market-charts">
+  <div class="wrap">
+    <div class="grid grid-2">
+      <div class="chart-card reveal">
+        <h4>Growth rate by segment (CAGR %)</h4>
+        <div class="chart-note">Compound annual growth rates as published by named research firms, each using its own forecast window.</div>
+        <div class="chart-wrap"><canvas id="cagrChart"></canvas></div>
+        <div class="chart-sources">Sources: Grand View Research (India Agritourism, 2025–2030); IMARC Group (India Travel &amp; Tourism, 2026–2034; India Wellness Tourism, 2026–2034); Future Market Insights (India Outbound Tourism, 2026–2036).</div>
+      </div>
+      <div class="chart-card reveal">
+        <h4>StayVista revenue, FY24 vs FY25</h4>
+        <div class="chart-note">India's largest curated villa-rental platform — the closest adjacent benchmark, not a like-for-like competitor.</div>
+        <div class="chart-wrap"><canvas id="stayvistaChart"></canvas></div>
+        <div class="chart-sources">Source: Entrackr, "StayVista turns profitable in FY25 with Rs 181 Cr revenue," citing Registrar of Companies filings (March 2026).</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="section-divider"></div></div>
+
+<!-- ================= CONSUMER BEHAVIOUR ================= -->
+<section id="behaviour">
+  <div class="wrap">
+    <span class="eyebrow reveal">05 — Consumer Behaviour</span>
+    <h2 class="sec-title reveal">Why consumers are changing — in their own words.</h2>
+    <p class="sec-sub reveal">Representative voices synthesised from the behavioural patterns documented above, not verbatim survey quotes.</p>
+    <div class="grid grid-3">
+      <div class="voice-card reveal"><p class="quote">I need a break.</p><p class="tag">The always-on urban professional, three weekends into a hard month.</p></div>
+      <div class="voice-card reveal"><p class="quote">I want my kids to experience farm life.</p><p class="tag">The parent whose children have never seen where milk actually comes from.</p></div>
+      <div class="voice-card reveal"><p class="quote">I want a peaceful workcation.</p><p class="tag">The remote worker who can log in from anywhere, and wants "anywhere" to be somewhere quiet.</p></div>
+      <div class="voice-card reveal"><p class="quote">I want to disconnect.</p><p class="tag">The traveller drawn to India's fastest-growing wellness sub-category: digital-detox escapes.</p></div>
+      <div class="voice-card reveal"><p class="quote">I want to reconnect with nature.</p><p class="tag">The city dweller for whom a two-hour drive to green space now counts as a real holiday.</p></div>
+      <div class="voice-card reveal"><p class="quote">I don't want to plan a whole trip, I just want to know it'll be good.</p><p class="tag">The decision-fatigued browser, tired of forty open tabs across three booking apps.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="section-divider"></div></div>
+
+<!-- ================= JTBD ================= -->
+<section id="jtbd">
+  <div class="wrap">
+    <span class="eyebrow reveal">06 — Jobs To Be Done</span>
+    <h2 class="sec-title reveal">What people are really hiring a nature experience to do.</h2>
+    <div class="grid grid-2">
+      <div class="jtbd-card reveal"><div class="situ">Situation: Burnout</div><p>When I feel <b>burned out</b>, I want a <b>nearby nature escape</b>, so that I can <b>recharge without taking a long trip away</b>.</p></div>
+      <div class="jtbd-card reveal"><div class="situ">Situation: Parenting</div><p>When I want my <b>children to grow up grounded</b>, I want a <b>real farm to visit</b>, so that they can <b>understand where food actually comes from</b>.</p></div>
+      <div class="jtbd-card reveal"><div class="situ">Situation: Remote work</div><p>When I can <b>work from anywhere</b>, I want a <b>calm, well-connected nature base</b>, so that I can <b>combine deep work with genuine rest</b>.</p></div>
+      <div class="jtbd-card reveal"><div class="situ">Situation: Decision fatigue</div><p>When I have <b>too many unranked options online</b>, I want a <b>short, trusted, curated shortlist</b>, so that I can <b>book confidently in minutes, not hours</b>.</p></div>
+      <div class="jtbd-card reveal"><div class="situ">Situation: Couple time</div><p>When my partner and I need <b>uninterrupted time together</b>, I want a <b>quiet, private nature experience</b>, so that we can <b>reconnect without distraction</b>.</p></div>
+      <div class="jtbd-card reveal"><div class="situ">Situation: Ageing parents</div><p>When I'm planning a trip for <b>ageing parents</b>, I want <b>accessible, low-exertion nature settings</b>, so that they can <b>enjoy the outdoors comfortably and safely</b>.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="section-divider"></div></div>
+
+<!-- ================= PERSONAS ================= -->
+<section id="personas">
+  <div class="wrap">
+    <span class="eyebrow reveal">07 — Customer Personas</span>
+    <h2 class="sec-title reveal">Six households, six reasons to leave the city.</h2>
+    <div class="grid grid-3">
+      <div class="card persona-card reveal">
+        <div class="persona-top"><h4>Young Professionals</h4><span>25–34, metro-based</span></div>
+        <div class="persona-body">
+          <div class="field"><div class="lbl">Goals</div><p>Escape routine quickly, post-worthy but genuine experiences.</p></div>
+          <div class="field"><div class="lbl">Motivations</div><p>Social validation blended with real need for rest.</p></div>
+          <div class="field"><div class="lbl">Pain Points</div><p>Too many undifferentiated listings; low trust in reviews.</p></div>
+          <div class="field"><div class="lbl">Ideal Experience</div><p>A short, beautiful, easy-to-book weekend that feels curated, not generic.</p></div>
+        </div>
+      </div>
+      <div class="card persona-card reveal">
+        <div class="persona-top"><h4>Families</h4><span>35–50, with children</span></div>
+        <div class="persona-body">
+          <div class="field"><div class="lbl">Goals</div><p>Educational, safe, multi-generational bonding time.</p></div>
+          <div class="field"><div class="lbl">Motivations</div><p>Give children exposure to nature and food origins.</p></div>
+          <div class="field"><div class="lbl">Pain Points</div><p>Uncertainty about hygiene, safety and child-friendliness of farm settings.</p></div>
+          <div class="field"><div class="lbl">Ideal Experience</div><p>A vetted farm experience with structured activities for kids and comfort for adults.</p></div>
+        </div>
+      </div>
+      <div class="card persona-card reveal">
+        <div class="persona-top"><h4>Couples</h4><span>Any age, seeking intimacy</span></div>
+        <div class="persona-body">
+          <div class="field"><div class="lbl">Goals</div><p>Privacy, romance, undistracted time together.</p></div>
+          <div class="field"><div class="lbl">Motivations</div><p>Reconnection away from routine and screens.</p></div>
+          <div class="field"><div class="lbl">Pain Points</div><p>Crowded, generic resorts that don't feel personal.</p></div>
+          <div class="field"><div class="lbl">Ideal Experience</div><p>A small, private nature setting with thoughtful, quiet touches.</p></div>
+        </div>
+      </div>
+      <div class="card persona-card reveal">
+        <div class="persona-top"><h4>Remote Workers</h4><span>Location-flexible professionals</span></div>
+        <div class="persona-body">
+          <div class="field"><div class="lbl">Goals</div><p>Reliable connectivity plus genuine change of scenery.</p></div>
+          <div class="field"><div class="lbl">Motivations</div><p>Escape apartment fatigue without sacrificing productivity.</p></div>
+          <div class="field"><div class="lbl">Pain Points</div><p>Uncertain Wi-Fi and workspace quality at nature properties.</p></div>
+          <div class="field"><div class="lbl">Ideal Experience</div><p>A dependable workcation base with a desk, strong signal and a view.</p></div>
+        </div>
+      </div>
+      <div class="card persona-card reveal">
+        <div class="persona-top"><h4>Wellness Seekers</h4><span>Health-conscious travellers</span></div>
+        <div class="persona-body">
+          <div class="field"><div class="lbl">Goals</div><p>Structured rest — digital detox, slow mornings, clean food.</p></div>
+          <div class="field"><div class="lbl">Motivations</div><p>Preventive self-care rather than crisis recovery.</p></div>
+          <div class="field"><div class="lbl">Pain Points</div><p>Wellness offerings that feel performative rather than authentic.</p></div>
+          <div class="field"><div class="lbl">Ideal Experience</div><p>A genuinely quiet nature setting with intentional, unhurried pacing.</p></div>
+        </div>
+      </div>
+      <div class="card persona-card reveal">
+        <div class="persona-top"><h4>Senior Citizens</h4><span>60+, comfort-first travellers</span></div>
+        <div class="persona-body">
+          <div class="field"><div class="lbl">Goals</div><p>Comfortable, low-exertion access to nature and fresh air.</p></div>
+          <div class="field"><div class="lbl">Motivations</div><p>Nostalgia for rural or agricultural upbringing; gentle activity.</p></div>
+          <div class="field"><div class="lbl">Pain Points</div><p>Physically demanding treks; unclear accessibility information.</p></div>
+          <div class="field"><div class="lbl">Ideal Experience</div><p>A calm, accessible property with clear comfort and mobility information upfront.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="section-divider"></div></div>
+
+<!-- ================= EXPERIENCE TAXONOMY ================= -->
+<section id="taxonomy">
+  <div class="wrap">
+    <span class="eyebrow reveal">08 — Experience Taxonomy</span>
+    <h2 class="sec-title reveal">Not "short stay" and "long stay." Tap a branch to expand.</h2>
+    <div class="tree reveal">
+      <div class="tree-node root">Nature Experiences</div>
+      <div class="tree-line"></div>
+      <div class="tree-branches">
+        <div class="branch">
+          <div class="branch-head" onclick="this.parentElement.classList.toggle('open')">Day Experiences <span class="chev">⌄</span></div>
+          <ul class="branch-leaves">
+            <li>Farm Visits</li><li>Animal Feeding</li><li>Fruit Picking</li><li>Organic Farming</li><li>Nature Walks</li><li>Pottery</li><li>Farm-to-Table Meals</li><li>Local Activities</li>
+          </ul>
+        </div>
+        <div class="branch">
+          <div class="branch-head" onclick="this.parentElement.classList.toggle('open')">Immersive Experiences <span class="chev">⌄</span></div>
+          <ul class="branch-leaves">
+            <li>Weekend Retreat</li><li>Workcation</li><li>Wellness Retreat</li><li>Digital Detox</li><li>Slow Living</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="section-divider"></div></div>
+
+<!-- ================= COMPETITOR LANDSCAPE ================= -->
+<section id="competitors">
+  <div class="wrap">
+    <span class="eyebrow reveal">09 — Competitor Landscape</span>
+    <h2 class="sec-title reveal">Three categories of adjacent player. One clear gap.</h2>
+    <p class="sec-sub reveal">Accommodation platforms solve <em>finding a place</em>. Experience platforms solve <em>finding an activity</em>. Nature experience brands come closest — but none combine trust, healthy living, food, nature and family into one ecosystem the way Country Delight can.</p>
+
+    <div class="comp-group-title reveal">Accommodation Platforms — they solve finding a place to stay</div>
+    <div class="grid grid-3">
+      <div class="card comp-card reveal">
+        <div class="comp-head"><h4>Airbnb</h4></div>
+        <div class="swb"><div class="s"><div class="lbl">Strength</div>Global inventory scale; established host trust systems and review infrastructure.</div><div class="w"><div class="lbl">Weakness</div>Overwhelming choice with no India-specific curation for nature or farm formats.</div></div>
+        <div class="opp"><div class="lbl">Opportunity for CD</div>Win on curation depth where Airbnb wins on raw supply breadth.</div>
+      </div>
+      <div class="card comp-card reveal">
+        <div class="comp-head"><h4>Booking.com</h4></div>
+        <div class="swb"><div class="s"><div class="lbl">Strength</div>Massive hotel and property inventory with strong conversion-optimised booking flow.</div><div class="w"><div class="lbl">Weakness</div>Statista describes it as transaction-first, built around booking volume rather than experience discovery.</div></div>
+        <div class="opp"><div class="lbl">Opportunity for CD</div>Lead with "how do you want to feel," not a filter panel of room types.</div>
+      </div>
+      <div class="card comp-card reveal">
+        <div class="comp-head"><h4>MakeMyTrip</h4></div>
+        <div class="swb"><div class="s"><div class="lbl">Strength</div>Deep India distribution; recently added AI-led trip planning via a partnership with OpenAI (announced Feb 2026).</div><div class="w"><div class="lbl">Weakness</div>Built around flights and hotel transactions, not curated nature or wellness journeys.</div></div>
+        <div class="opp"><div class="lbl">Opportunity for CD</div>Own the "nature and wellness" niche MakeMyTrip's AI tools aren't designed around.</div>
+        <div class="source">Source: <a href="https://www.ibef.org/industry/tourism-hospitality-india" target="_blank" rel="noopener">IBEF, Tourism &amp; Hospitality Industry in India</a></div>
+      </div>
+      <div class="card comp-card reveal">
+        <div class="comp-head"><h4>StayVista</h4></div>
+        <div class="swb"><div class="s"><div class="lbl">Strength</div>India's largest curated villa platform: 1,000+ villas, 85+ locations, ₹181 Cr FY25 revenue (+29% YoY), first profitable year in FY25.</div><div class="w"><div class="lbl">Weakness</div>Positioned around luxury villas and group accommodation, not everyday trust or farm/nature authenticity.</div></div>
+        <div class="opp"><div class="lbl">Opportunity for CD</div>Compete on trust and authenticity for the mass urban household, not luxury group accommodation.</div>
+        <div class="source">Source: <a href="https://entrackr.com/fintrackr/stayvista-turns-profitable-in-fy25-with-rs-181-cr-revenue-11246978" target="_blank" rel="noopener">Entrackr, March 2026</a></div>
+      </div>
+      <div class="card comp-card reveal">
+        <div class="comp-head"><h4>Saffron Stays</h4></div>
+        <div class="swb"><div class="s"><div class="lbl">Strength</div>Strong brand identity around private, design-forward villas for group getaways.</div><div class="w"><div class="lbl">Weakness</div>Price point and villa format skew toward premium groups, not solo, couple or family day experiences.</div></div>
+        <div class="opp"><div class="lbl">Opportunity for CD</div>Serve the broader, more affordable everyday-trust segment Saffron Stays doesn't target.</div>
+      </div>
+    </div>
+
+    <div class="comp-group-title reveal">Experience Platforms — they solve finding an activity</div>
+    <div class="grid grid-3">
+      <div class="card comp-card reveal">
+        <div class="comp-head"><h4>Thrillophilia</h4></div>
+        <div class="swb"><div class="s"><div class="lbl">Strength</div>Broad activity marketplace across adventure, culture and nature categories.</div><div class="w"><div class="lbl">Weakness</div>Marketplace breadth over curated depth; quality varies widely by third-party operator.</div></div>
+        <div class="opp"><div class="lbl">Opportunity for CD</div>Fewer, better-vetted experiences beat a long unranked activity list.</div>
+      </div>
+      <div class="card comp-card reveal">
+        <div class="comp-head"><h4>Airbnb Experiences</h4></div>
+        <div class="swb"><div class="s"><div class="lbl">Strength</div>Established global template for bookable, hosted local experiences.</div><div class="w"><div class="lbl">Weakness</div>Thin India-specific farm and nature experience catalogue relative to global inventory.</div></div>
+        <div class="opp"><div class="lbl">Opportunity for CD</div>Build the depth of India-specific nature experiences Airbnb hasn't localised.</div>
+      </div>
+    </div>
+
+    <div class="comp-group-title reveal">Nature Experience Brands — they come closest, but neither is a full ecosystem</div>
+    <div class="grid grid-3">
+      <div class="card comp-card reveal">
+        <div class="comp-head"><h4>Akshayakalpa</h4></div>
+        <div class="swb"><div class="s"><div class="lbl">Strength</div>Organic dairy-farm brand with genuine farm-to-table credibility.</div><div class="w"><div class="lbl">Weakness</div>Primarily a product (dairy) brand; farm visits are a secondary offering, not the core product.</div></div>
+        <div class="opp"><div class="lbl">Opportunity for CD</div>The nearest direct analogue — a dairy brand extending into farm experience — validating this exact strategy.</div>
+      </div>
+      <div class="card comp-card reveal">
+        <div class="comp-head"><h4>Our Native Village</h4></div>
+        <div class="swb"><div class="s"><div class="lbl">Strength</div>Genuine rural-immersion positioning near Bengaluru; strong niche authenticity.</div><div class="w"><div class="lbl">Weakness</div>Single-location model with limited scalability across India.</div></div>
+        <div class="opp"><div class="lbl">Opportunity for CD</div>Take the single-farm authenticity model and make it a multi-city, discoverable network.</div>
+      </div>
+    </div>
+
+    <div class="card reveal" style="margin-top:32px;background:var(--soil-light);border:none;">
+      <p style="color:var(--forest);font-size:15px;"><b>Country Delight's position:</b> none of the nine brands above combine trust, healthy living, food, nature, family and authenticity into a single curated ecosystem. That combination — not inventory size — is the actual competitive space.</p>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="section-divider"></div></div>
+
+<!-- ================= COMPETITIVE POSITIONING ================= -->
+<section id="positioning">
+  <div class="wrap">
+    <span class="eyebrow reveal">10 — Competitive Positioning</span>
+    <h2 class="sec-title reveal">A clear, unoccupied quadrant.</h2>
+    <p class="sec-sub reveal">Placement is a qualitative strategic judgement based on public brand positioning, not a scored index.</p>
+    <div class="matrix-wrap reveal">
+      <div class="matrix" id="matrix">
+        <span class="axis-label top">High Authenticity / Experience Depth</span>
+        <span class="axis-label bottom">Mass Choice</span>
+        <span class="axis-label left">↑ Luxury</span>
+        <div class="matrix-dot other" style="left:20%;top:78%;">Booking.com</div>
+        <div class="matrix-dot other" style="left:38%;top:65%;">MakeMyTrip</div>
+        <div class="matrix-dot other" style="left:62%;top:55%;">Airbnb</div>
+        <div class="matrix-dot other" style="left:80%;top:30%;">Saffron Stays</div>
+        <div class="matrix-dot other" style="left:68%;top:38%;">StayVista</div>
+        <div class="matrix-dot other" style="left:30%;top:35%;">Our Native Village</div>
+        <div class="matrix-dot cd" style="left:52%;top:18%;">Country Delight Stays</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="section-divider"></div></div>
+
+<!-- ================= WHITE SPACE ================= -->
+<section id="whitespace">
+  <div class="wrap">
+    <span class="eyebrow reveal">11 — White Space Analysis</span>
+    <h2 class="sec-title reveal">Why existing players leave this gap open.</h2>
+    <div class="card reveal" style="padding:12px 32px;">
+      <div class="ws-row"><h4>Booking.com</h4><p>Transaction-focused — optimised for booking speed and volume, not for helping someone decide how they want to feel.</p></div>
+      <div class="ws-row"><h4>Airbnb</h4><p>Too many undifferentiated choices — powerful global supply with limited India-specific nature curation.</p></div>
+      <div class="ws-row"><h4>Farm Stays (unbranded)</h4><p>Poor discoverability — genuine, authentic properties exist, but they are scattered across Instagram pages, WhatsApp groups and word of mouth.</p></div>
+      <div class="ws-row"><h4>Google Search</h4><p>Low trust — search results mix legitimate operators with unverifiable listings, forcing the traveller to do the vetting themselves.</p></div>
+      <div class="ws-row highlight"><h4>Country Delight</h4><p>Curated. Trusted. Authentic — the only brand in this list that already has an existing, earned relationship with the household before the search even begins.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="section-divider"></div></div>
+
+<!-- ================= WHY WE WIN ================= -->
+<section id="why-win">
+  <div class="wrap">
+    <span class="eyebrow reveal">12 — Why Country Delight Wins</span>
+    <h2 class="sec-title reveal">Nine dimensions, one consistent edge.</h2>
+    <div class="win-grid reveal">
+      <div class="win-card"><div class="ic">T</div><h5>Trust</h5><p>An existing daily relationship with the household, earned before the traveller even starts searching.</p></div>
+      <div class="win-card"><div class="ic">A</div><h5>Authenticity</h5><p>A brand built on real farms and real sourcing, not a marketplace of anonymous third-party listings.</p></div>
+      <div class="win-card"><div class="ic">N</div><h5>Nature</h5><p>Farm and rural access is close to the existing supply chain, not a new category built from zero.</p></div>
+      <div class="win-card"><div class="ic">F</div><h5>Food</h5><p>Farm-to-table dining is a natural extension of a dairy and fresh-food brand's existing expertise.</p></div>
+      <div class="win-card"><div class="ic">Fa</div><h5>Family</h5><p>A household brand already speaks to the family unit, not just the individual traveller.</p></div>
+      <div class="win-card"><div class="ic">S</div><h5>Sustainability</h5><p>Rural and farm-based living aligns naturally with a brand already positioned around sustainable sourcing.</p></div>
+      <div class="win-card"><div class="ic">W</div><h5>Wellness</h5><p>Slow living and nature immersion connect directly to India's fastest-growing wellness sub-categories.</p></div>
+      <div class="win-card"><div class="ic">C</div><h5>Community</h5><p>Direct relationships with farm partners create a real community network competitors would need years to replicate.</p></div>
+      <div class="win-card"><div class="ic">E</div><h5>Education</h5><p>Genuine opportunities for children and families to learn where food actually comes from.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="section-divider"></div></div>
+
+<!-- ================= PRODUCT OPPORTUNITY ================= -->
+<section id="opportunity">
+  <div class="wrap">
+    <span class="eyebrow reveal">13 — Product Opportunity</span>
+    <h2 class="sec-title reveal">This is not a hospitality play.</h2>
+    <div class="grid grid-2">
+      <div class="card reveal">
+        <h3 style="font-size:20px;margin-bottom:12px;">What it looks like from the outside</h3>
+        <p style="color:var(--grey);">Country Delight Stays will look, on the surface, like it competes with villa platforms and booking apps. It doesn't. It is building a curated ecosystem of trusted nature experiences, where accommodation is one component among several — alongside food, activities, and the people who host them.</p>
+      </div>
+      <div class="card reveal" style="background:var(--forest);color:#fff;border:none;">
+        <h3 style="font-size:20px;margin-bottom:12px;color:#fff;">The one sentence that matters</h3>
+        <p style="color:rgba(255,255,255,.8);">Accommodation is only one part of the experience. The experience is the product.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="section-divider"></div></div>
+
+<!-- ================= DISCOVERY INSIGHT ================= -->
+<section id="insight">
+  <div class="wrap">
+    <span class="eyebrow reveal">14 — Product Discovery Insight</span>
+    <h2 class="sec-title reveal">The single biggest insight in this report.</h2>
+    <p class="sec-sub reveal">Every accommodation and travel platform in this report starts with geography. Country Delight starts with intent — destination comes last, not first.</p>
+    <div class="feel-banner reveal">
+      <div class="old">"Where do you want to go?"</div>
+      <div class="new">"How do you want to feel?"</div>
+    </div>
+    <div class="flow reveal">
+      <div class="flow-step"><div class="fnum">Step 1</div><h5>How do you want to feel?</h5><p>Recharge, reconnect, disconnect, or bond with family — the entry point is emotional, not geographic.</p></div>
+      <div class="flow-arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="flow-step"><div class="fnum">Step 2</div><h5>What kind of experience?</h5><p>Family Farm Day, Work from Nature, Digital Detox, Wellness Retreat, Slow Living — matched to the feeling chosen.</p></div>
+      <div class="flow-arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="flow-step"><div class="fnum">Step 3</div><h5>How much time do you have?</h5><p>A few hours, a full day, or a weekend — set expectations before location narrows the options.</p></div>
+      <div class="flow-arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="flow-step"><div class="fnum">Step 4</div><h5>How far will you travel?</h5><p>How far someone is willing to go, given the time available — destination enters the flow here, and only here.</p></div>
+      <div class="flow-arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="flow-step"><div class="fnum">Step 5</div><h5>Recommended Experiences</h5><p>A short, curated shortlist — not an endless, unranked list of listings.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONCLUSION ================= -->
+<section id="conclusion">
+  <div class="wrap">
+    <span class="eyebrow reveal">15 — Conclusion</span>
+    <h2 class="sec-title reveal">Problem, opportunity, differentiation, next steps.</h2>
+    <div class="grid grid-2">
+      <div class="card reveal"><h3>Problem</h3><p>Discovery for authentic nature experiences in India is fragmented, and trust — not supply — is the real constraint on adoption.</p></div>
+      <div class="card reveal"><h3>Opportunity</h3><p>A large and accelerating category — India's agritourism market alone is forecast to grow at roughly 15% annually through 2030 — with no dominant, trusted curator yet.</p></div>
+      <div class="card reveal"><h3>Differentiation</h3><p>An existing, earned relationship of trust with millions of urban households, extended from the breakfast table to the weekend getaway.</p></div>
+      <div class="card reveal"><h3>Next Steps</h3><p>Start narrow: pilot day experiences in one or two metro-adjacent farm clusters, validate the "how do you want to feel" discovery model, then expand toward immersive, overnight formats.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SOURCES ================= -->
+<section id="sources">
+  <div class="wrap">
+    <span class="eyebrow reveal">16 — Sources &amp; Methodology</span>
+    <h2 class="sec-title reveal">Every number in this report traces to a named source.</h2>
+    <div class="methodology reveal">
+      Market-sizing research from different firms often disagrees, sometimes by a wide margin, because each uses its own scope, base year and forecast methodology. Where estimates conflict — for example, India's wellness tourism market is sized anywhere between roughly $19 billion and $35 billion for the mid-2020s depending on the firm — this report cites a primary figure and notes the range rather than picking the most favourable number. No revenue, TAM/SAM/SOM, or user-adoption figures have been invented for Country Delight itself; those remain qualitative until Country Delight's own data is available.
+    </div>
+    <div class="source-list reveal">
+      <div class="source-item"><span class="stitle">India Tourism Statistics / India Tourism Data Compendium 2025</span><a href="https://tourism.gov.in/market-research-and-statistics" target="_blank" rel="noopener">tourism.gov.in/market-research-and-statistics</a><span class="note">Ministry of Tourism, Government of India — domestic tourist visit volumes.</span></div>
+      <div class="source-item"><span class="stitle">Tourism &amp; Hospitality Industry in India</span><a href="https://www.ibef.org/industry/tourism-hospitality-india" target="_blank" rel="noopener">ibef.org/industry/tourism-hospitality-india</a><span class="note">India Brand Equity Foundation — government budget allocation, MUDRA homestay loans, sector job projections.</span></div>
+      <div class="source-item"><span class="stitle">India Travel &amp; Tourism Market Report</span><a href="https://www.imarcgroup.com/india-travel-tourism-market" target="_blank" rel="noopener">imarcgroup.com/india-travel-tourism-market</a><span class="note">IMARC Group — overall market size and CAGR, 2025–2034.</span></div>
+      <div class="source-item"><span class="stitle">Travel &amp; Tourism – India, Market Forecast</span><a href="https://www.statista.com/outlook/mmo/travel-tourism/india" target="_blank" rel="noopener">statista.com/outlook/mmo/travel-tourism/india</a><span class="note">Statista Market Insights — revenue outlook and consumer preference trends.</span></div>
+      <div class="source-item"><span class="stitle">Domestic Tourism in India — Statistics &amp; Facts</span><a href="https://www.statista.com/topics/5733/domestic-tourism-in-india/" target="_blank" rel="noopener">statista.com/topics/5733</a><span class="note">Statista — staycation and workcation trend commentary.</span></div>
+      <div class="source-item"><span class="stitle">India Outbound Tourism Market</span><a href="https://www.futuremarketinsights.com/reports/india-outbound-tourism-market" target="_blank" rel="noopener">futuremarketinsights.com</a><span class="note">Future Market Insights — outbound leisure travel size and CAGR.</span></div>
+      <div class="source-item"><span class="stitle">Wellness Tourism Market in India</span><a href="https://www.mordorintelligence.com/industry-reports/india-wellness-tourism-market" target="_blank" rel="noopener">mordorintelligence.com</a><span class="note">Mordor Intelligence — "Heal in India" budget allocation, GST changes, digital-detox growth rate.</span></div>
+      <div class="source-item"><span class="stitle">India Wellness Tourism Market Size, Share &amp; Forecast</span><a href="https://www.imarcgroup.com/india-wellness-tourism-market" target="_blank" rel="noopener">imarcgroup.com/india-wellness-tourism-market</a><span class="note">IMARC Group — alternate wellness tourism sizing and CAGR, 2026–2034.</span></div>
+      <div class="source-item"><span class="stitle">India Wellness Tourism Market Size &amp; Outlook</span><a href="https://www.grandviewresearch.com/horizon/outlook/wellness-tourism-market/india" target="_blank" rel="noopener">grandviewresearch.com/horizon</a><span class="note">Grand View Research — India's share of the global wellness tourism market.</span></div>
+      <div class="source-item"><span class="stitle">India Agritourism Market Size &amp; Outlook</span><a href="https://www.grandviewresearch.com/horizon/outlook/agritourism-market/india" target="_blank" rel="noopener">grandviewresearch.com/horizon</a><span class="note">Grand View Research — primary agritourism sizing used in this report.</span></div>
+      <div class="source-item"><span class="stitle">Agritourism in India — Market Size, Trends and Outlook</span><a href="https://www.imarcgroup.com/india-agritourism-market" target="_blank" rel="noopener">imarcgroup.com/india-agritourism-market</a><span class="note">IMARC Group — rural tourism hub and homestay development figures (Uttar Pradesh).</span></div>
+      <div class="source-item"><span class="stitle">Agritourism Market (Global)</span><a href="https://www.coherentmarketinsights.com/industry-reports/agritourism-market" target="_blank" rel="noopener">coherentmarketinsights.com</a><span class="note">Coherent Market Insights — global farmstay listing growth on platforms such as Airbnb and HipCamp.</span></div>
+      <div class="source-item"><span class="stitle">StayVista — Company Profile</span><a href="https://tracxn.com/d/companies/stayvista/__wBlfiJ5GdbZSFOVmO77-cglqwqdnbDD8o8rm9U2w_VE" target="_blank" rel="noopener">tracxn.com</a><span class="note">Tracxn — funding history and competitor set.</span></div>
+      <div class="source-item"><span class="stitle">StayVista turns profitable in FY25 with Rs 181 Cr revenue</span><a href="https://entrackr.com/fintrackr/stayvista-turns-profitable-in-fy25-with-rs-181-cr-revenue-11246978" target="_blank" rel="noopener">entrackr.com</a><span class="note">Entrackr — FY24/FY25 revenue and profit figures from Registrar of Companies filings.</span></div>
+      <div class="source-item"><span class="stitle">StayVista forays into branded residences, targets Rs 250 crore in FY26</span><a href="https://www.business-standard.com/companies/news/stayvista-branded-residences-revenue-target-fy26-125052600949_1.html" target="_blank" rel="noopener">business-standard.com</a><span class="note">Business Standard — portfolio size, FY26 targets, IPO timeline.</span></div>
+      <div class="source-item"><span class="stitle">StayVista raises over Rs 40 crore Series B</span><a href="https://www.proptechbuzz.com/news/stayvista-raises-40cr-expand-villa-rental-network" target="_blank" rel="noopener">proptechbuzz.com</a><span class="note">PropTech Buzz — Series B funding, property and location count.</span></div>
+      <div class="source-item"><span class="stitle">Remote Work Statistics And Trends In 2026</span><a href="https://www.forbes.com/advisor/in/business/remote-work-statistics/" target="_blank" rel="noopener">forbes.com/advisor/in</a><span class="note">Forbes Advisor India, citing CXOToday — India remote workforce projection for 2025.</span></div>
+      <div class="source-item"><span class="stitle">Hybrid Work Policy India 2026</span><a href="https://proedgehub.in/hybrid-work-policy-india-2026-data-best-practices-and-hr-strategy-guide/" target="_blank" rel="noopener">proedgehub.in</a><span class="note">Pro Edge Hub — India-specific hybrid/remote worker sentiment data.</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Country Delight Stays — Product Discovery &amp; Market Opportunity Report. Prepared for internal strategic use. Market figures current as of the cited publication dates and subject to revision by their original sources.</div>
+</footer>
+
+</main>
+
+<script>
+// ---------- Mobile nav toggle ----------
+const navToggle = document.getElementById('navtoggle');
+const sidenav = document.getElementById('sidenav');
+navToggle.addEventListener('click', () => sidenav.classList.toggle('open'));
+document.querySelectorAll('#navlist a').forEach(a=>{
+  a.addEventListener('click', ()=> sidenav.classList.remove('open'));
+});
+
+// ---------- Progress bar ----------
+const progressBar = document.getElementById('progress-bar');
+function updateProgress(){
+  const h = document.documentElement;
+  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  progressBar.style.width = scrolled + '%';
+}
+document.addEventListener('scroll', updateProgress, {passive:true});
+
+// ---------- Scroll spy ----------
+const sections = document.querySelectorAll('main section[id]');
+const navLinks = document.querySelectorAll('#navlist a');
+const spyObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    const id = entry.target.getAttribute('id');
+    const link = document.querySelector('#navlist a[href="#'+id+'"]');
+    if(!link) return;
+    if(entry.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('active'));
+      link.classList.add('active');
+    }
+  });
+},{rootMargin:'-40% 0px -50% 0px',threshold:0});
+sections.forEach(s=>spyObserver.observe(s));
+
+// ---------- Reveal on scroll ----------
+const revealObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('in');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+// ---------- Timeline expand ----------
+document.querySelectorAll('.t-head').forEach(head=>{
+  head.addEventListener('click', ()=>{
+    head.parentElement.classList.toggle('open');
+  });
+});
+
+// ---------- Parallax hills ----------
+window.addEventListener('scroll', ()=>{
+  const hills = document.querySelectorAll('.hill');
+  const y = window.scrollY;
+  hills.forEach((h,i)=>{
+    h.style.transform = 'translateY('+ (y * (0.05 + i*0.03)) +'px)';
+  });
+},{passive:true});
+
+// ---------- Charts ----------
+window.addEventListener('load', ()=>{
+  const ctx1 = document.getElementById('cagrChart');
+  if(ctx1){
+    new Chart(ctx1, {
+      type:'bar',
+      data:{
+        labels:['Overall Travel & Tourism\n(IMARC, 2026–34)','Wellness Tourism\n(IMARC, 2026–34)','Agritourism\n(Grand View, 2025–30)','Outbound Leisure Travel\n(FMI, 2026–36)'],
+        datasets:[{
+          label:'CAGR %',
+          data:[5.62, 6.17, 15.4, 11.4],
+          backgroundColor:['#4CAF50','#1E8E5A','#A9824C','#0F3A28'],
+          borderRadius:8,
+          maxBarThickness:56
+        }]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:(c)=>c.parsed.y+'% CAGR'}}},
+        scales:{
+          y:{beginAtZero:true,ticks:{callback:v=>v+'%'},grid:{color:'#eee'}},
+          x:{ticks:{font:{size:10.5}},grid:{display:false}}
+        }
+      }
+    });
+  }
+  const ctx2 = document.getElementById('stayvistaChart');
+  if(ctx2){
+    new Chart(ctx2, {
+      type:'bar',
+      data:{
+        labels:['FY24','FY25'],
+        datasets:[{
+          label:'Revenue (₹ Crore)',
+          data:[140,181],
+          backgroundColor:['#EFE3CE','#1E8E5A'],
+          borderRadius:10,
+          maxBarThickness:90
+        }]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:(c)=>'₹'+c.parsed.y+' Cr'}}},
+        scales:{
+          y:{beginAtZero:true,ticks:{callback:v=>'₹'+v+'Cr'},grid:{color:'#eee'}},
+          x:{grid:{display:false}}
+        }
+      }
+    });
+  }
+});
+</script>
+</body>
+</html>

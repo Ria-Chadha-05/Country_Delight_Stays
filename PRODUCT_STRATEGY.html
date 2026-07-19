@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Country Delight Stays — Product Strategy (Proposed)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#1E8E5A; --green-2:#4CAF50; --off-white:#F8FAF8; --dark:#1B1B1B; --grey:#6B7280;
+  --soil:#A9824C; --soil-light:#EFE3CE; --forest:#0F3A28; --border:rgba(27,27,27,0.1);
+  --shadow:0 8px 24px rgba(15,58,40,0.08); --radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--off-white);color:var(--dark);line-height:1.65;}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:600;letter-spacing:-0.01em;}
+.wrap{max-width:1060px;margin:0 auto;padding:0 28px;}
+a{color:var(--green);}
+
+#navtoggle{display:none;position:fixed;top:14px;left:14px;z-index:1000;background:var(--dark);color:#fff;border:none;width:42px;height:42px;border-radius:10px;align-items:center;justify-content:center;box-shadow:var(--shadow);}
+#navtoggle svg{width:18px;height:18px;}
+#sidenav{position:fixed;top:0;left:0;height:100vh;width:250px;background:rgba(248,250,248,.9);backdrop-filter:blur(14px);border-right:1px solid var(--border);z-index:900;padding:20px 14px;overflow-y:auto;}
+#sidenav .brand{font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--forest);padding:0 8px 12px;border-bottom:1px solid var(--border);margin-bottom:8px;}
+#sidenav a{display:block;text-decoration:none;color:var(--grey);font-size:12px;padding:5px 8px;border-radius:8px;font-weight:500;}
+#sidenav a:hover{background:rgba(30,142,90,.08);color:var(--dark);}
+main{margin-left:250px;}
+@media(max-width:980px){
+  #sidenav{transform:translateX(-100%);transition:transform .3s ease;box-shadow:var(--shadow);}
+  #sidenav.open{transform:translateX(0);}
+  main{margin-left:0;} #navtoggle{display:flex;}
+}
+
+header.top{background:linear-gradient(160deg,var(--forest),var(--green));color:#fff;padding:56px 0 40px;}
+header.top .eyebrow{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:#BFE7CE;font-weight:700;margin-bottom:14px;}
+header.top h1{font-size:clamp(26px,4vw,38px);color:#fff;max-width:780px;line-height:1.15;}
+header.top p.sub{margin-top:14px;color:rgba(255,255,255,.82);max-width:680px;font-size:15px;}
+.status-badge{display:inline-flex;align-items:center;gap:8px;margin-top:20px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);border-radius:100px;padding:8px 16px;font-size:12.5px;font-weight:700;color:#fff;}
+.status-badge .dot{width:8px;height:8px;border-radius:50%;background:#F2C94C;}
+
+.callout{background:#fff;border:1px solid var(--border);border-left:4px solid var(--soil);border-radius:12px;padding:20px 24px;margin:24px 0;box-shadow:var(--shadow);}
+.callout.warn{border-left-color:#B4442E;background:#FBF3EF;}
+.callout h4{font-size:14px;margin-bottom:8px;}
+.callout p,.callout li{font-size:13.5px;color:var(--dark);}
+
+section{padding:44px 0;scroll-margin-top:16px;}
+section.alt{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.eyebrow{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:8px;}
+h2{font-size:clamp(20px,2.5vw,27px);margin-bottom:8px;}
+h3{font-size:16px;margin:18px 0 10px;}
+p.lead{color:var(--grey);max-width:720px;margin-bottom:20px;font-size:14.5px;}
+p.body{font-size:14.5px;margin-bottom:12px;}
+
+.grid{display:grid;gap:14px;}
+.grid-4{grid-template-columns:repeat(4,1fr);} .grid-3{grid-template-columns:repeat(3,1fr);} .grid-2{grid-template-columns:repeat(2,1fr);}
+@media(max-width:900px){.grid-4,.grid-3,.grid-2{grid-template-columns:1fr 1fr;}}
+@media(max-width:640px){.grid-4,.grid-3,.grid-2{grid-template-columns:1fr;}}
+
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow);}
+.card h4{font-size:14.5px;margin-bottom:6px;}
+.card p{font-size:12.5px;color:var(--grey);}
+
+.impl{margin-top:14px;background:var(--soil-light);border-radius:10px;padding:12px 16px;font-size:13px;color:var(--forest);}
+.impl b{text-transform:uppercase;font-size:10.5px;letter-spacing:.05em;display:block;margin-bottom:4px;}
+
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);font-size:13px;margin-bottom:8px;}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top;}
+th{background:var(--forest);color:#fff;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;} tr:hover td{background:#FAFBF9;}
+.tablewrap{overflow-x:auto;margin-bottom:16px;}
+
+.thesis-box{background:linear-gradient(135deg,var(--forest),var(--green));color:#fff;border-radius:var(--radius);padding:36px;text-align:center;}
+.thesis-box p{font-family:'Fraunces',serif;font-size:clamp(18px,2.4vw,24px);line-height:1.5;color:#fff;}
+.thesis-box span{display:block;margin-top:14px;font-family:'Inter',sans-serif;font-size:12px;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.06em;}
+
+.pos-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:700px){.pos-grid{grid-template-columns:1fr;}}
+.pos-card{border-radius:12px;padding:18px 20px;}
+.pos-card.yes{background:#EEF8F1;border:1px solid rgba(30,142,90,.25);}
+.pos-card.no{background:#FBF3EF;border:1px solid rgba(180,68,46,.2);}
+.pos-card h4{font-size:14px;margin-bottom:8px;}
+.pos-card ul{padding-left:18px;font-size:13px;color:var(--dark);}
+
+.principle-card{background:#fff;border:1px solid var(--border);border-left:4px solid var(--green);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow);}
+.principle-card h4{font-size:15px;margin-bottom:6px;}
+.principle-card .why{font-size:12.5px;color:var(--grey);margin-bottom:8px;}
+
+.pillar-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:var(--shadow);text-align:center;}
+.pillar-card .n{width:36px;height:36px;border-radius:50%;background:var(--forest);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-family:'Fraunces',serif;font-size:15px;}
+.pillar-card h4{font-size:14.5px;margin-bottom:6px;}
+.pillar-card p{font-size:11.5px;color:var(--grey);text-align:left;margin-bottom:4px;}
+.pillar-card p b{color:var(--forest);}
+
+.diff-row{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:10px;box-shadow:var(--shadow);}
+@media(max-width:700px){.diff-row{grid-template-columns:1fr;text-align:center;}}
+.diff-row .old{color:var(--grey);font-size:13px;}
+.diff-row .new{color:var(--forest);font-weight:700;font-size:13px;}
+.diff-row .arrow{color:var(--soil);font-size:18px;}
+.diff-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--soil);margin-bottom:14px;}
+
+.boundary-card{background:#FBF3EF;border:1px solid rgba(180,68,46,.2);border-radius:12px;padding:16px 18px;}
+.boundary-card h4{font-size:13.5px;color:#B4442E;margin-bottom:6px;}
+.boundary-card p{font-size:12px;color:var(--dark);}
+
+.flywheel{position:relative;max-width:520px;margin:0 auto;}
+.fw-ring{display:flex;flex-direction:column;gap:10px;}
+.fw-node{background:#fff;border:1px solid var(--border);border-radius:100px;padding:12px 22px;text-align:center;font-size:13px;font-weight:700;color:var(--forest);box-shadow:var(--shadow);position:relative;}
+.fw-node::after{content:'↓';position:absolute;left:50%;transform:translateX(-50%);bottom:-22px;color:var(--soil);font-size:16px;}
+.fw-node:last-child::after{content:'↻ back to top';font-size:11px;bottom:-20px;white-space:nowrap;}
+
+.risk-table td.impact-high{color:#B4442E;font-weight:700;} .risk-table td.impact-med{color:#D8A73B;font-weight:700;} .risk-table td.impact-low{color:var(--green);font-weight:700;}
+
+.roadmap-flow{display:flex;align-items:center;gap:0;flex-wrap:wrap;justify-content:center;}
+.rm-step{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 16px;width:150px;text-align:center;box-shadow:var(--shadow);}
+.rm-step h5{font-size:13.5px;margin-bottom:4px;}
+.rm-step p{font-size:10.5px;color:var(--grey);}
+.rm-arrow{width:30px;text-align:center;color:var(--soil);flex-shrink:0;}
+@media(max-width:900px){.rm-arrow{width:100%;transform:rotate(90deg);}}
+
+.metric-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+.metric-card .k{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--soil);font-weight:700;}
+.metric-card p{font-size:12.5px;margin-top:4px;}
+
+.status-pill{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:100px;background:#FBE9DC;color:#B4622E;text-transform:uppercase;letter-spacing:.04em;}
+
+.source-list{font-size:12px;color:var(--grey);}
+footer{padding:32px 0;text-align:center;color:var(--grey);font-size:11.5px;}
+</style>
+</head>
+<body>
+
+<button id="navtoggle" aria-label="Toggle navigation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+
+<nav id="sidenav">
+  <div class="brand">Product Strategy</div>
+  <a href="#exec">01 Executive Summary</a>
+  <a href="#thesis">02 Product Thesis &amp; Opportunity</a>
+  <a href="#vision">03 Vision</a>
+  <a href="#positioning">04 Positioning &amp; Boundaries</a>
+  <a href="#principles">05 Product Principles</a>
+  <a href="#pillars">06 Product Pillars</a>
+  <a href="#value">07 Value Proposition</a>
+  <a href="#differentiation">08 Strategic Differentiation</a>
+  <a href="#ecosystem">09 Ecosystem Strategy</a>
+  <a href="#experience">10 Experience Strategy</a>
+  <a href="#trust">11 Trust Strategy</a>
+  <a href="#growth">12 Growth Strategy</a>
+  <a href="#flywheel">13 Product Flywheel</a>
+  <a href="#risks">14 Strategic Risks</a>
+  <a href="#metrics">15 Success Metrics</a>
+  <a href="#roadmap">16 Roadmap Philosophy</a>
+  <a href="#recommendations">17 Strategic Recommendations</a>
+  <a href="#appendix">18 Strategy Appendix</a>
+</nav>
+
+<main>
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Product Strategy — Synthesis of Market Assessment &amp; User Study</div>
+    <h1>Country Delight Stays — Product Strategy</h1>
+    <p class="sub">What should Country Delight build, why will it succeed, and what principles should guide it as it evolves. This is our proposed answer, built by reasoning forward from the Market Assessment and User Study — not yet tested against real customers.</p>
+    <div class="status-badge"><span class="dot"></span>STATUS: PROPOSED — pending review, challenge, and approval by you and the Head of Product</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="callout warn">
+    <h4>⚠ How to read this document</h4>
+    <p>Every recommendation below is a <b>proposition</b>: "based on our analysis so far, we believe this is the right direction." It is written with the confidence a strategy document needs to be useful for alignment — but confidence of expression is not the same as validation. The two documents this synthesizes (Market Assessment, User Study) were themselves built on estimates and untested hypotheses, several flagged as high-uncertainty. Nothing here should be treated as decided until you've had the chance to challenge it — Section 18 lists exactly which parts rest on the shakiest ground.</p>
+  </div>
+</div>
+
+<!-- ============ 01 EXEC SUMMARY ============ -->
+<section id="exec">
+  <div class="wrap">
+    <span class="eyebrow">01 — Executive Summary</span>
+    <h2>If we build only one product, what should it be?</h2>
+    <div class="thesis-box">
+      <p>A curated ecosystem of trusted, short-radius Nature Experiences for Mumbai households — starting with a single, tightly-scoped day-trip and short-getaway offering built on 2–4 vetted farm partners — that extends Country Delight's existing promise of healthy, authentic living beyond food.</p>
+      <span>Proposed Core Recommendation</span>
+    </div>
+    <div class="grid grid-2" style="margin-top:20px;">
+      <div class="card"><h4>Strategic opportunity</h4><p>A specific, underserved niche — trust-seeking, curation-willing, short-trip nature travelers — sits between two kinds of competitor that don't serve them well: accommodation platforms optimized for choice, and informal farm stays with no discoverability.</p></div>
+      <div class="card"><h4>Target customer (proposed)</h4><p>Families and young professionals in Mumbai seeking short (day-trip to 2-night), nature-based experiences, who would rather pay for curation than spend hours researching.</p></div>
+      <div class="card"><h4>Positioning (proposed)</h4><p>Not a travel company. A trusted curator of nature experiences — the same trust relationship Country Delight has with the kitchen, extended to the weekend.</p></div>
+      <div class="card"><h4>Long-term vision (proposed)</h4><p>If this works, Country Delight is the brand urban families think of first for a nature trip, the same way it's already the default for trusted food at home.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 PRODUCT THESIS ============ -->
+<section id="thesis">
+  <div class="wrap">
+    <span class="eyebrow">02 — Product Thesis &amp; Opportunity</span>
+    <h2>The problem, why it's ours to solve, and one sentence to test decisions against</h2>
+    <div class="grid grid-2">
+      <div class="card"><h4>What problem exists?</h4><p>Planning a short, trustworthy nature getaway currently takes as much research effort as planning a week-long vacation, for an outcome that should be simple.</p></div>
+      <div class="card"><h4>What's actually broken?</h4><p>The market has optimized for choice — more listings, more filters — when the real bottleneck is trust and decision fatigue, not a lack of options.</p></div>
+      <div class="card"><h4>Why now</h4><p>Short-trip and staycation demand is rising, people are tired of research-heavy planning, and Country Delight's household trust has reached a scale where extending beyond food is plausible.</p></div>
+      <div class="card"><h4>Why Country Delight specifically</h4><p>Trust, not travel expertise, is what's scarce in this category — and it's the one asset Country Delight already has with exactly this household.</p></div>
+      <div class="card"><h4>What should change?</h4><p>The unit of value should shift from "a listing you have to evaluate" to "a curated experience you don't have to evaluate yourself."</p></div>
+      <div class="card"><h4>The open question</h4><p>Whether the trust households already have in Country Delight for food actually carries over to a new category. That hasn't been tested and is the single biggest thing to validate before scaling.</p></div>
+    </div>
+    <div class="thesis-box" style="margin-top:16px;">
+      <p>Proposed Thesis: Country Delight Stays removes the research burden from short-trip nature travel by replacing open-ended choice with earned trust — starting narrow, with day and short-trip experiences, and expanding only as trust and supply mature.</p>
+      <span>Foundation for every product decision below</span>
+    </div>
+    <div class="impl"><b>Strategic Implication</b>Test every future feature, partnership, or expansion decision against this thesis: does it reduce research burden and build trust, or does it just add more choice? If it's the latter, propose rejecting it regardless of short-term appeal.</div>
+  </div>
+</section>
+
+<!-- ============ 04 VISION ============ -->
+<section class="alt" id="vision">
+  <div class="wrap">
+    <span class="eyebrow">03 — Vision</span>
+    <h2>Proposed vision, mission, and north star</h2>
+    <div class="grid grid-2">
+      <div class="card"><h4>Vision Statement</h4><p>A country where reconnecting with nature is a normal weekend habit, not a rare annual escape — and where Country Delight is the reason it feels easy.</p></div>
+      <div class="card"><h4>Mission</h4><p>To make trusted, curated nature experiences as easy to access as a daily glass of milk.</p></div>
+      <div class="card"><h4>North Star</h4><p>The number of households who return to Country Delight Stays for a second nature experience without re-researching from scratch — repeat trust, not just repeat bookings.</p></div>
+      <div class="card"><h4>Long-term aspiration</h4><p>Not a dairy company that also does travel — a trust brand that happens to have started with milk, and is now the household's go-to for healthy, authentic living more broadly.</p></div>
+    </div>
+    <div class="card" style="margin-top:14px;"><h4>Success definition (proposed)</h4><p>Not booking volume in year one, but whether a small, tightly-curated set of experiences earns genuine repeat trust from a defined segment — proof the trust-transfer thesis actually holds before any scale decision is made. Early metrics (Section 15) should track trust and repeat behavior, not volume.</p></div>
+  </div>
+</section>
+
+<!-- ============ 05 POSITIONING ============ -->
+<section id="positioning">
+  <div class="wrap">
+    <span class="eyebrow">04 — Positioning &amp; Boundaries</span>
+    <h2>Who we are, who we aren't, and what we won't become</h2>
+    <div class="pos-grid">
+      <div class="pos-card yes"><h4>✓ Who we are (proposed)</h4><ul><li>A trusted curator of nature experiences</li><li>An extension of Country Delight's healthy-living promise</li><li>A relationship-first, not transaction-first, brand</li><li>A small-and-excellent, not large-and-average, catalog</li></ul></div>
+      <div class="pos-card no"><h4>✕ Who we are not</h4><ul><li>A travel or tourism company, hotel marketplace, or price-comparison platform</li><li>An open marketplace anyone can list on</li><li>A discount-first or breadth-first business</li></ul></div>
+    </div>
+    <div class="grid grid-2" style="margin-top:14px;">
+      <div class="card"><h4>Category (proposed)</h4><p>Curated Nature Experiences — a new category, not a sub-category of travel, tourism, or hospitality.</p></div>
+      <div class="card"><h4>Positioning Statement (proposed)</h4><p>For urban households who want to reconnect with nature without the research burden, Country Delight Stays is the curated nature-experience layer that extends the trust you already have in your kitchen to your weekend.</p></div>
+      <div class="card"><h4>Brand Promise (proposed)</h4><p>We've already chosen the good farms. Now we've chosen the good experiences too.</p></div>
+      <div class="card"><h4>Emotional / Functional / Relationship Promise</h4><p><b>Emotional:</b> you'll feel like yourself again. <b>Functional:</b> you won't have to research it. <b>Relationship:</b> the more you trust us, the less you'll have to think about it next time.</p></div>
+    </div>
+    <h3>What this product won't become</h3>
+    <div class="grid grid-3">
+      <div class="boundary-card"><h4>Not a generic OTA</h4><p>Breadth-first inventory undermines the curation thesis.</p></div>
+      <div class="boundary-card"><h4>Not a hotel marketplace</h4><p>Accommodation-first framing contradicts "experience is the product."</p></div>
+      <div class="boundary-card"><h4>Not a discount platform</h4><p>Price-first competition is a race we don't need to win.</p></div>
+      <div class="boundary-card"><h4>Not a comparison engine</h4><p>Comparison tools increase decision fatigue, the opposite of the thesis.</p></div>
+      <div class="boundary-card"><h4>Not an open marketplace</h4><p>Anyone-can-list models can't hold the quality bar curation needs.</p></div>
+      <div class="boundary-card"><h4>Not international travel</h4><p>Outside both the trust-transfer logic and the nature-not-tourism framing above.</p></div>
+    </div>
+    <div class="impl"><b>Strategic Implication</b>Any partnership or growth tactic that pulls toward "more choice, more listings" should be treated as a positioning risk. Boundaries should loosen only after the core thesis is validated, not pre-emptively to capture adjacent demand.</div>
+  </div>
+</section>
+
+<!-- ============ 06 PRINCIPLES ============ -->
+<section class="alt" id="principles">
+  <div class="wrap">
+    <span class="eyebrow">05 — Product Principles</span>
+    <h2>Eight principles proposed to guide every product decision</h2>
+    <div class="grid grid-2">
+      <div class="principle-card"><h4>Trust before choice</h4><div class="why">Curation is the product, not a feature of it.</div><p style="font-size:12.5px;">Implication: never expand catalog breadth faster than vetting capacity.</p></div>
+      <div class="principle-card"><h4>Curation before abundance</h4><div class="why">More options increase decision fatigue, the exact problem we exist to solve.</div><p style="font-size:12.5px;">Implication: cap the number of live experiences per city deliberately.</p></div>
+      <div class="principle-card"><h4>Experiences over accommodation</h4><div class="why">The stay is an enabler; the feeling is the product.</div><p style="font-size:12.5px;">Implication: design and market experiences first, list accommodation details second.</p></div>
+      <div class="principle-card"><h4>Simplicity over complexity</h4><div class="why">Every added decision point is a place a tired user abandons the flow.</div><p style="font-size:12.5px;">Implication: default to fewer steps, fewer filters, fewer choices at each stage.</p></div>
+      <div class="principle-card"><h4>Quality before scale</h4><div class="why">A single bad experience undermines the entire trust proposition disproportionately.</div><p style="font-size:12.5px;">Implication: growth targets should never override partner vetting standards.</p></div>
+      <div class="principle-card"><h4>Nature before tourism</h4><div class="why">Authenticity is the differentiator, not polish.</div><p style="font-size:12.5px;">Implication: prefer real, working farms over staged or purpose-built "experience centers."</p></div>
+      <div class="principle-card"><h4>Relationships before transactions</h4><div class="why">Repeat trust is the north star (Section 3), not one-off conversion.</div><p style="font-size:12.5px;">Implication: design for the second booking from the first interaction onward.</p></div>
+      <div class="principle-card"><h4>Healthy living beyond food</h4><div class="why">This product only makes sense as an extension of an existing promise, not a new one.</div><p style="font-size:12.5px;">Implication: every experience should visibly connect to health, nature, or authentic living — not just "fun."</p></div>
+    </div>
+    <div class="impl"><b>Strategic Implication</b>These principles will occasionally conflict with growth pressure (e.g. "quality before scale" vs. investor/leadership appetite for speed). Propose treating that tension as expected, not a sign the principles are wrong.</div>
+  </div>
+</section>
+
+<!-- ============ 07 PILLARS ============ -->
+<section id="pillars">
+  <div class="wrap">
+    <span class="eyebrow">06 — Product Pillars</span>
+    <h2>Seven core capabilities, not a feature list</h2>
+    <div class="grid grid-4">
+      <div class="pillar-card"><div class="n">1</div><h4>Discover</h4><p><b>Purpose:</b> Feeling-first entry, not destination search.</p><p><b>User value:</b> Find something that matches how they feel.</p><p><b>Business value:</b> Differentiates from every destination-first competitor.</p></div>
+      <div class="pillar-card"><div class="n">2</div><h4>Choose</h4><p><b>Purpose:</b> A short, trusted shortlist.</p><p><b>User value:</b> No decision fatigue.</p><p><b>Business value:</b> Higher conversion from fewer, better options.</p></div>
+      <div class="pillar-card"><div class="n">3</div><h4>Plan</h4><p><b>Purpose:</b> Remove logistics burden (transport, timing).</p><p><b>User value:</b> Near-zero planning effort.</p><p><b>Business value:</b> Justifies premium pricing.</p></div>
+      <div class="pillar-card"><div class="n">4</div><h4>Book</h4><p><b>Purpose:</b> Transparent, simple, all-in.</p><p><b>User value:</b> No hidden costs, no anxiety.</p><p><b>Business value:</b> Lower cart abandonment.</p></div>
+      <div class="pillar-card"><div class="n">5</div><h4>Experience</h4><p><b>Purpose:</b> Deliver on the curated promise.</p><p><b>User value:</b> Reality matches expectation.</p><p><b>Business value:</b> This is where trust is actually earned or lost.</p></div>
+      <div class="pillar-card"><div class="n">6</div><h4>Remember</h4><p><b>Purpose:</b> Make the experience distinct enough to recall and share.</p><p><b>User value:</b> Something worth talking about.</p><p><b>Business value:</b> Organic, trust-carrying word of mouth.</p></div>
+      <div class="pillar-card"><div class="n">7</div><h4>Belong</h4><p><b>Purpose:</b> Long-term relationship, not one-off transaction.</p><p><b>User value:</b> Feels like part of an ongoing relationship, not a vendor.</p><p><b>Business value:</b> Retention and lifetime value.</p><p style="margin-top:4px;"><b>Future:</b> Membership, community, cross-category bundling with food.</p></div>
+    </div>
+    <div class="impl"><b>Strategic Implication</b>"Belong" is the pillar most connected to Country Delight's existing business — it's the natural bridge for future ecosystem bundling (Section 9), and probably the last pillar to build well, not the first.</div>
+  </div>
+</section>
+
+<!-- ============ 08 VALUE PROPOSITION ============ -->
+<section class="alt" id="value">
+  <div class="wrap">
+    <span class="eyebrow">07 — Value Proposition</span>
+    <h2>Why each stakeholder chooses this ecosystem</h2>
+    <div class="tablewrap"><table>
+      <tr><th>Stakeholder</th><th>Why they'd choose this ecosystem (proposed)</th></tr>
+      <tr><td>Customers</td><td>They get certainty and ease in exchange for giving up some choice — a fair trade for someone who's tired of researching.</td></tr>
+      <tr><td>Hosts / farm partners</td><td>Access to a trusted demand channel and Country Delight's existing brand credibility, without having to build their own marketing or booking infrastructure.</td></tr>
+      <tr><td>Country Delight</td><td>A new, higher-margin relationship surface with existing customers, extending lifetime value beyond a subscription grocery relationship.</td></tr>
+      <tr><td>Partners (transport, F&amp;B, activity providers)</td><td>Reliable, curated demand from a vetted platform, rather than needing to acquire customers independently.</td></tr>
+      <tr><td>Local communities</td><td>A structured, sustainable revenue channel for small farms and rural operators, tied to a brand that has an existing reputation for fair sourcing relationships.</td></tr>
+    </table></div>
+    <div class="impl"><b>Strategic Implication</b>The host/partner value proposition depends entirely on Country Delight actually delivering demand — this creates a chicken-and-egg risk (Section 14) that the pilot approach (Section 16) is specifically designed to de-risk before wider partner commitments.</div>
+  </div>
+</section>
+
+<!-- ============ 09 DIFFERENTIATION ============ -->
+<section id="differentiation">
+  <div class="wrap">
+    <span class="eyebrow">08 — Strategic Differentiation</span>
+    <h2>A philosophy difference, not a feature difference</h2>
+    <p class="lead">Comparing how each existing model fundamentally operates, not which one has more filters or better UI.</p>
+
+    <div class="diff-title">vs. Traditional OTAs &amp; Booking Platforms</div>
+    <div class="diff-row"><div class="old">Optimize for booking speed and transaction volume</div><div class="arrow">→</div><div class="new">Optimize for trust and decision confidence</div></div>
+    <div class="diff-row"><div class="old">Success = more listings shown</div><div class="arrow">→</div><div class="new">Success = fewer, better options needed</div></div>
+
+    <div class="diff-title">vs. Resort Aggregators &amp; Villa Platforms</div>
+    <div class="diff-row"><div class="old">Accommodation is the product</div><div class="arrow">→</div><div class="new">Accommodation is one enabler of an experience</div></div>
+    <div class="diff-row"><div class="old">Scale via more properties, more cities</div><div class="arrow">→</div><div class="new">Scale via deeper trust in fewer, better places</div></div>
+
+    <div class="diff-title">vs. Experience Marketplaces</div>
+    <div class="diff-row"><div class="old">Open marketplace, variable quality by operator</div><div class="arrow">→</div><div class="new">Closed, vetted network with consistent standards</div></div>
+    <div class="diff-row"><div class="old">Discovery via search and filters</div><div class="arrow">→</div><div class="new">Discovery via feeling and curated recommendation</div></div>
+
+    <div class="impl" style="margin-top:14px;"><b>Strategic Implication</b>Every differentiation above trades scale for trust. Propose accepting slower initial growth as the cost of building something structurally harder for a well-funded OTA to copy quickly.</div>
+  </div>
+</section>
+
+<!-- ============ 11 ECOSYSTEM ============ -->
+<section id="ecosystem">
+  <div class="wrap">
+    <span class="eyebrow">09 — Ecosystem Strategy</span>
+    <h2>How Stays fits the broader Country Delight ecosystem</h2>
+    <div class="grid grid-4">
+      <div class="card"><h4>Food</h4><p>Farm-to-table dining as a natural in-experience extension of the existing sourcing relationship.</p></div>
+      <div class="card"><h4>Health</h4><p>Wellness and slow-living formats connect directly to "healthy living" as the parent brand promise.</p></div>
+      <div class="card"><h4>Nature</h4><p>The core category itself — the most direct ecosystem extension of "authentic sourcing" into "authentic experience."</p></div>
+      <div class="card"><h4>Family</h4><p>Shared household decision-making already exists in the subscription relationship — extends naturally to family experiences.</p></div>
+      <div class="card"><h4>Lifestyle</h4><p>Longer-term potential to represent a broader "considered, healthy, authentic living" identity beyond any single category.</p></div>
+      <div class="card"><h4>Community</h4><p>Shared experiences create a natural community layer — potential future peer recommendation network.</p></div>
+      <div class="card"><h4>Membership</h4><p>A long-term structural bridge — bundling Stays access with existing subscription relationships once trust is proven standalone.</p></div>
+      <div class="card"><h4>Cross-category opportunities</h4><p>Bundled offers (e.g. dairy subscription + nature experience credits) — proposed only after Stays proves it can stand alone.</p></div>
+    </div>
+    <div class="impl"><b>Strategic Implication</b>Propose resisting the temptation to bundle with the core subscription business too early — bundling before Stays has independent trust risks diluting both, rather than strengthening either.</div>
+  </div>
+</section>
+
+<!-- ============ 12 EXPERIENCE STRATEGY ============ -->
+<section class="alt" id="experience">
+  <div class="wrap">
+    <span class="eyebrow">10 — Experience Strategy</span>
+    <h2>How users should feel, not what they should click</h2>
+    <div class="grid grid-2">
+      <div class="card"><h4>Before booking</h4><p>Confident, not overwhelmed — the opposite of how OTA browsing typically feels.</p></div>
+      <div class="card"><h4>During discovery</h4><p>Understood — the product should feel like it already knows what kind of feeling they're looking for.</p></div>
+      <div class="card"><h4>During travel</h4><p>Cared for — logistics invisible, so attention stays on the experience itself.</p></div>
+      <div class="card"><h4>After returning</h4><p>Glad they didn't have to plan it themselves — the emotional proof point of the entire value proposition.</p></div>
+      <div class="card"><h4>Long-term relationship</h4><p>The way they already feel about their Country Delight delivery — quiet, dependable trust, not a marketing relationship.</p></div>
+    </div>
+    <div class="impl"><b>Strategic Implication</b>Every touchpoint should be evaluated against these five feelings, not just functional completeness — a technically working booking flow that leaves someone feeling anxious has still failed the experience strategy.</div>
+  </div>
+</section>
+
+<!-- ============ 13 TRUST STRATEGY ============ -->
+<section id="trust">
+  <div class="wrap">
+    <span class="eyebrow">11 — Trust Strategy</span>
+    <h2>Trust is the differentiator — here's how we propose building it</h2>
+    <div class="grid grid-2">
+      <div class="card"><h4>How trust is built</h4><p>Radical selectivity — proposed to start with 2–4 partners, chosen for safety, hygiene and authenticity over scale, so every early experience over-delivers.</p></div>
+      <div class="card"><h4>How trust is maintained</h4><p>Consistent quality standards enforced across every partner, with clear consequences (removal) for standard violations — trust degrades fastest through inconsistency, not one bad incident.</p></div>
+      <div class="card"><h4>How trust scales</h4><p>Slower than demand — propose adding new partners only as fast as vetting and quality-monitoring capacity actually grows, not as fast as customer demand would allow.</p></div>
+      <div class="card"><h4>Quality assurance</h4><p>Proposed: a defined, non-negotiable vetting checklist (safety, hygiene, authenticity, experience design) applied before any partner goes live, plus periodic re-review.</p></div>
+      <div class="card"><h4>Reviews</h4><p>Proposed as a secondary trust signal, not the primary one — curation should carry the trust burden reviews carry on open marketplaces.</p></div>
+      <div class="card"><h4>Transparency</h4><p>All-in pricing, clear cancellation terms, and honest representation of what an experience actually is — no marketing-photo gap.</p></div>
+    </div>
+    <div class="impl"><b>Strategic Implication</b>Trust is the one asset that, once damaged, is disproportionately expensive to rebuild — propose treating any trade-off between growth speed and trust integrity as an easy call in favor of trust, not a genuine dilemma.</div>
+  </div>
+</section>
+
+<!-- ============ 14 GROWTH STRATEGY ============ -->
+<section class="alt" id="growth">
+  <div class="wrap">
+    <span class="eyebrow">12 — Growth Strategy</span>
+    <h2>How this grows, proposed in sequence</h2>
+    <div class="grid grid-3">
+      <div class="card"><h4>Geographic expansion</h4><p>Proposed: prove the model in one radius/corridor before expanding to a second city or region.</p></div>
+      <div class="card"><h4>Supply expansion</h4><p>Gated by vetting capacity (Section 11), not demand — the opposite of typical marketplace growth logic.</p></div>
+      <div class="card"><h4>Customer acquisition</h4><p>Proposed to lean on existing Country Delight household relationships first — the lowest-cost, highest-trust acquisition channel available, before paid channels.</p></div>
+      <div class="card"><h4>Retention</h4><p>Driven by the "Belong" pillar (Section 6) — repeat trust, not discount-driven repeat purchase.</p></div>
+      <div class="card"><h4>Network effects</h4><p>Weak initially (this isn't a two-sided marketplace at scale) — proposed to grow more from brand trust compounding than from classic network effects.</p></div>
+      <div class="card"><h4>Referrals</h4><p>Word-of-mouth is hypothesized as the primary discovery channel (User Study, Section 12) — worth designing for explicitly rather than treating as incidental.</p></div>
+    </div>
+    <div class="impl"><b>Strategic Implication</b>This growth model is deliberately slower than a typical marketplace playbook — propose being explicit with leadership that this is a trust-compounding strategy, not a blitzscaling one, so growth expectations are set correctly from the start.</div>
+  </div>
+</section>
+
+<!-- ============ 15 FLYWHEEL ============ -->
+<section id="flywheel">
+  <div class="wrap">
+    <span class="eyebrow">13 — Product Flywheel</span>
+    <h2>The reinforcing loop this strategy is betting on</h2>
+    <div class="flywheel">
+      <div class="fw-ring">
+        <div class="fw-node">Great, curated experiences</div>
+        <div class="fw-node">Happy, trusting families</div>
+        <div class="fw-node">Compounding brand trust</div>
+        <div class="fw-node">More repeat &amp; referred bookings</div>
+        <div class="fw-node">Stronger, more selective partners</div>
+        <div class="fw-node">Even better curated experiences</div>
+      </div>
+    </div>
+    <div class="grid grid-2" style="margin-top:34px;">
+      <div class="card"><h4>Where this flywheel is fragile</h4><p>The first link — "great, curated experiences" — is entirely dependent on partner quality, which depends on vetting capacity, which is the least proven part of the whole strategy.</p></div>
+      <div class="card"><h4>Where this flywheel compounds fastest</h4><p>"Compounding brand trust" is the one link Country Delight starts with a genuine head start on, versus any competitor building this from zero.</p></div>
+    </div>
+    <div class="impl"><b>Strategic Implication</b>Investment should be weighted toward the fragile early links (partner vetting, first-experience quality) rather than the links Country Delight already has an advantage in (brand trust) — propose not over-investing in marketing before the experience itself is proven.</div>
+  </div>
+</section>
+
+<!-- ============ 16 RISKS ============ -->
+<section class="alt" id="risks">
+  <div class="wrap">
+    <span class="eyebrow">14 — Strategic Risks</span>
+    <h2>What could break this strategy</h2>
+    <div class="tablewrap"><table class="risk-table">
+      <tr><th>Risk</th><th>Impact</th><th>Likelihood</th><th>Mitigation (proposed)</th></tr>
+      <tr><td>Supply quality inconsistency</td><td class="impact-high">High</td><td>Medium</td><td>Strict vetting checklist; slow, capacity-gated partner growth</td></tr>
+      <tr><td>Scaling curation without diluting it</td><td class="impact-high">High</td><td>High</td><td>Cap catalog size deliberately; resist growth pressure to loosen standards</td></tr>
+      <tr><td>Operational complexity (logistics, F&amp;B, transport)</td><td>Medium</td><td>High</td><td>Start with a single format (day-trip) before adding overnight/immersive complexity</td></tr>
+      <tr><td>Seasonality (monsoon-heavy destination corridor)</td><td>Medium</td><td>High</td><td>Diversify destination types (indoor/wellness formats) as a season-hedging move</td></tr>
+      <tr><td>Trust erosion from a single bad experience</td><td class="impact-high">High</td><td>Medium</td><td>Rapid partner-removal protocol; transparent incident handling</td></tr>
+      <tr><td>Competitive response from well-funded OTAs/villa platforms</td><td>Medium</td><td>Medium</td><td>Compete on trust and category definition, not on inventory breadth or price</td></tr>
+      <tr><td>Demand uncertainty (the core untested assumption)</td><td class="impact-high">High</td><td>Unknown — untested</td><td>Small pilot before any scale commitment (see Market Assessment, Section 20)</td></tr>
+    </table></div>
+    <div class="impl"><b>Strategic Implication</b>The last risk — demand uncertainty — is the one every other section of this document assumes away. Propose treating pilot validation of demand as the actual Phase 1 gate before any of the growth or ecosystem strategy above is acted on.</div>
+  </div>
+</section>
+
+<!-- ============ 17 METRICS ============ -->
+<section id="metrics">
+  <div class="wrap">
+    <span class="eyebrow">15 — Success Metrics</span>
+    <h2>Strategic, not implementation, metrics</h2>
+    <div class="grid grid-3">
+      <div class="metric-card"><div class="k">North Star</div><p>Households completing a second curated experience without re-researching from scratch</p></div>
+      <div class="metric-card"><div class="k">Business</div><p>Revenue per repeat household; partner retention rate</p></div>
+      <div class="metric-card"><div class="k">Customer</div><p>Time-to-decision (proxy for reduced planning burden)</p></div>
+      <div class="metric-card"><div class="k">Experience</div><p>Post-experience satisfaction vs. pre-booking expectation gap</p></div>
+      <div class="metric-card"><div class="k">Trust</div><p>Willingness to book without reading external reviews first</p></div>
+      <div class="metric-card"><div class="k">Retention</div><p>Repeat booking rate within 6 months</p></div>
+      <div class="metric-card"><div class="k">Community</div><p>Referral rate — bookings originating from a past customer</p></div>
+    </div>
+    <div class="impl"><b>Strategic Implication</b>None of these are measurable yet — Section 18 flags that defining exactly how to measure "trust" and "expectation gap" is itself unresolved and should be a near-term workstream, not an afterthought.</div>
+  </div>
+</section>
+
+<!-- ============ 18 ROADMAP PHILOSOPHY ============ -->
+<section class="alt" id="roadmap">
+  <div class="wrap">
+    <span class="eyebrow">16 — Product Roadmap Philosophy</span>
+    <h2>Capability evolution, not a timeline</h2>
+    <div class="roadmap-flow">
+      <div class="rm-step"><h5>Discovery</h5><p>Prove the feeling-first entry point resonates at all</p></div>
+      <div class="rm-arrow">→</div>
+      <div class="rm-step"><h5>Booking</h5><p>Prove people will actually pay for curation, not just browse it</p></div>
+      <div class="rm-arrow">→</div>
+      <div class="rm-step"><h5>Experience</h5><p>Prove delivered quality matches the promise consistently</p></div>
+      <div class="rm-arrow">→</div>
+      <div class="rm-step"><h5>Membership</h5><p>Only once repeat trust is proven organically, formalize it</p></div>
+      <div class="rm-arrow">→</div>
+      <div class="rm-step"><h5>AI Personalization</h5><p>Only useful once there's enough real behavior data to personalize against</p></div>
+      <div class="rm-arrow">→</div>
+      <div class="rm-step"><h5>Nature Ecosystem</h5><p>The long-term ambition — only earned after every prior stage holds up</p></div>
+    </div>
+    <div class="card" style="margin-top:24px;"><h4>Why this order (proposed)</h4><p>Each stage is a precondition for the next to make sense — building membership before repeat trust is proven risks formalizing a relationship that doesn't yet exist; building AI personalization before real usage data exists means personalizing on guesses. The sequence is deliberately conservative.</p></div>
+    <div class="impl"><b>Strategic Implication</b>Resist pressure to parallelize these stages for speed — propose that skipping validation at any stage (especially Discovery→Booking) risks building Membership or AI features on top of an unproven foundation.</div>
+  </div>
+</section>
+
+<!-- ============ 19 STRATEGIC RECOMMENDATIONS ============ -->
+<section id="recommendations">
+  <div class="wrap">
+    <span class="eyebrow">17 — Strategic Recommendations</span>
+    <h2>Proposed answers, summarized</h2>
+    <div class="tablewrap"><table>
+      <tr><th>Decision</th><th>Proposed recommendation</th></tr>
+      <tr><td>Target customer</td><td>Families and young professionals, Mumbai, seeking short (day-trip to 2-night) nature experiences, curation-willing</td></tr>
+      <tr><td>Launch market</td><td>Single corridor near Mumbai (&lt;100km), not multi-city — prove depth before breadth</td></tr>
+      <tr><td>Experience categories</td><td>Start with one format — Day Experiences (farm visits, nature walks) — before Immersive/overnight formats</td></tr>
+      <tr><td>Pricing philosophy</td><td>Mid-market anchor (~₹1,500–3,500/person), consistent with existing resort day-pass norms — premium tier added once trust is proven, not before</td></tr>
+      <tr><td>Go-to-market direction</td><td>Lead with existing Country Delight household relationships, not broad paid acquisition</td></tr>
+      <tr><td>Partnership strategy</td><td>2–4 deeply vetted farm/nature partners at launch — quality over count</td></tr>
+      <tr><td>Expansion strategy</td><td>Expand supply within the proven corridor before expanding geography; expand geography before expanding trip duration/complexity</td></tr>
+      <tr><td>Long-term vision</td><td>Country Delight becomes the default trust layer for both "what enters the home" and "where the family goes to feel human again"</td></tr>
+    </table></div>
+    <div class="impl"><b>Strategic Implication</b>This table is the single most consequential part of the document — everything in it should be explicitly reviewed and either approved, amended, or rejected by you and the Head of Product before it informs a PRD.</div>
+  </div>
+</section>
+
+<!-- ============ 20 APPENDIX ============ -->
+<section class="alt" id="appendix">
+  <div class="wrap">
+    <span class="eyebrow">18 — Strategy Appendix</span>
+    <h2>What this strategy assumes, and what's still open</h2>
+    <span class="status-pill">Status: Proposed, Not Approved</span>
+
+    <h3 style="margin-top:18px;">Key assumptions this strategy rests on</h3>
+    <div class="tablewrap"><table>
+      <tr><th>Assumption</th><th>Where it comes from</th><th>Validated?</th></tr>
+      <tr><td>Mumbai households will pay a premium for curation over DIY planning</td><td>Market Assessment funnel, Stage 7 (~40% estimate)</td><td>No — single highest-priority validation</td></tr>
+      <tr><td>Country Delight's food/sourcing trust transfers to a new experience category</td><td>Core thesis (Section 2)</td><td>No — never tested directly</td></tr>
+      <tr><td>Families/young professionals are the right first segment</td><td>User Study hypothesis (Section 9) and Market Assessment funnel independently agreeing</td><td>No — convergent hypotheses, not independent validation</td></tr>
+      <tr><td>Decision fatigue, not lack of options, is the dominant pain point</td><td>User Study Section 8 (reasoned, not measured)</td><td>No</td></tr>
+      <tr><td>2–4 partners is a viable minimum to launch credibly</td><td>Reasoned from trust strategy (Section 11)</td><td>No — depends on unknown partner-supply-side data</td></tr>
+    </table></div>
+
+    <h3>Strategic trade-offs made explicitly</h3>
+    <div class="callout"><p>Growth speed for trust integrity. Catalog breadth for curation depth. Early revenue for long-term brand equity. Each of these trades is a real cost, not a free choice — propose surfacing them explicitly in the next leadership conversation rather than treating them as settled.</p></div>
+
+    <h3>Open questions</h3>
+    <div class="grid grid-2">
+      <div class="card"><h4>Does trust actually transfer?</h4><p>The entire strategic thesis depends on it, and it's never been tested.</p></div>
+      <div class="card"><h4>Is 2–4 partners enough to launch credibly?</h4><p>Depends on real partner-supply data we don't have yet.</p></div>
+      <div class="card"><h4>What's the actual willingness-to-pay?</h4><p>Pricing philosophy (Section 17) is a starting anchor, not a tested price point.</p></div>
+      <div class="card"><h4>How is "trust" actually measured?</h4><p>Named as a north-star-adjacent concept (Section 15) without an agreed measurement method yet.</p></div>
+    </div>
+
+    <h3>Dependencies</h3>
+    <div class="callout"><p>This strategy depends on: (1) the Market Assessment's funnel assumptions holding up under real validation; (2) the User Study's segment/archetype hypotheses surviving real interviews; (3) organizational appetite for a deliberately slower, trust-first growth model rather than a conventional marketplace playbook.</p></div>
+
+    <h3>Decision log</h3>
+    <div class="tablewrap"><table>
+      <tr><th>Decision point</th><th>Status</th><th>Owner</th></tr>
+      <tr><td>Approve target customer &amp; launch market (Section 17)</td><td class="status-pill">Proposed</td><td>Head of Product</td></tr>
+      <tr><td>Approve pricing philosophy anchor</td><td class="status-pill">Proposed</td><td>Head of Product / Leadership</td></tr>
+      <tr><td>Approve pilot scope (2–4 partners, single corridor)</td><td class="status-pill">Proposed</td><td>Head of Product</td></tr>
+      <tr><td>Commission real user validation (per User Study Section 15)</td><td class="status-pill">Proposed</td><td>Discovery team</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<footer>Country Delight Stays — Product Strategy. A proposed strategic direction, synthesized from the Market Assessment and User Study reports. Status: pending review and approval — not a validated or approved strategy until decided otherwise by the Head of Product.</footer>
+</main>
+
+<script>
+const navToggle = document.getElementById('navtoggle');
+const sidenav = document.getElementById('sidenav');
+navToggle.addEventListener('click', () => sidenav.classList.toggle('open'));
+document.querySelectorAll('#sidenav a').forEach(a=>a.addEventListener('click',()=>sidenav.classList.remove('open')));
+</script>
+</body>
+</html>

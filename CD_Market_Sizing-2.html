@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mumbai Market Sizing & Conversion — CD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root{
+  --green:#1E8E5A; --green-2:#4CAF50; --off-white:#F8FAF8; --dark:#1B1B1B; --grey:#6B7280;
+  --soil:#A9824C; --soil-light:#EFE3CE; --forest:#0F3A28; --border:rgba(27,27,27,0.1);
+  --shadow:0 8px 24px rgba(15,58,40,0.08);
+  --radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--off-white);color:var(--dark);line-height:1.6;}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:600;letter-spacing:-0.01em;}
+.wrap{max-width:1000px;margin:0 auto;padding:0 28px;}
+
+header.top{background:linear-gradient(160deg,var(--forest),var(--green));color:#fff;padding:48px 0 36px;}
+header.top .eyebrow{font-size:12.5px;letter-spacing:.09em;text-transform:uppercase;color:#BFE7CE;font-weight:700;margin-bottom:14px;}
+header.top h1{font-size:clamp(24px,3.6vw,34px);color:#fff;max-width:780px;line-height:1.2;}
+
+section{padding:44px 0;}
+section.alt{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:10px;}
+h2{font-size:clamp(20px,2.6vw,26px);margin-bottom:22px;}
+
+.funnel-step{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:18px 22px;box-shadow:var(--shadow);margin-bottom:4px;position:relative;}
+.funnel-step::after{content:'↓';position:absolute;left:30px;bottom:-26px;font-size:18px;color:var(--soil);z-index:2;}
+.funnel-step:last-child::after{display:none;}
+.funnel-row{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+.funnel-left{flex:1;min-width:220px;}
+.funnel-step h4{font-size:15.5px;margin-bottom:4px;}
+.funnel-step p.desc{font-size:13px;color:var(--grey);}
+.funnel-right{text-align:right;}
+.funnel-right .out{font-family:'Fraunces',serif;font-size:22px;color:var(--forest);}
+.funnel-right .pct{font-size:12px;color:var(--grey);margin-top:2px;}
+
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);font-size:13.5px;margin-bottom:6px;}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);}
+th{background:var(--forest);color:#fff;font-size:11px;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+td.num{font-weight:700;color:var(--forest);white-space:nowrap;}
+
+.sizing-box{background:linear-gradient(135deg,var(--forest),var(--green));color:#fff;border-radius:var(--radius);padding:26px 28px;margin-top:20px;}
+.sizing-box h3{color:#fff;font-size:16.5px;margin-bottom:12px;}
+.sizing-range{display:flex;gap:16px;flex-wrap:wrap;}
+.sizing-range div{background:rgba(255,255,255,.1);border-radius:10px;padding:12px 16px;flex:1;min-width:150px;}
+.sizing-range .k{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,.7);}
+.sizing-range .v{font-family:'Fraunces',serif;font-size:19px;margin-top:4px;}
+
+.chart-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow);margin-bottom:16px;}
+.chart-card h4{font-size:14px;margin-bottom:12px;color:var(--forest);}
+.chart-wrap{position:relative;height:260px;}
+.chart-wrap.tall{height:300px;}
+.note{font-size:12.5px;color:var(--grey);margin-top:10px;}
+.assumption{font-size:12.5px;color:var(--dark);background:var(--off-white);border-radius:8px;padding:8px 12px;margin-top:10px;}
+
+footer{padding:30px 0;text-align:center;color:var(--grey);font-size:12px;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Mumbai Market Sizing</div>
+    <h1>Population → Traveler → Target Segment → Reach → Conversion</h1>
+  </div>
+</header>
+
+<!-- ============ FUNNEL ============ -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">01 — TAM Funnel</span>
+    <h2>Mumbai population narrowed to the target segment</h2>
+
+    <div class="chart-card"><h4>Funnel narrowing (M people)</h4><div class="chart-wrap"><canvas id="funnelChart"></canvas></div></div>
+
+    <div class="funnel-step">
+      <div class="funnel-row">
+        <div class="funnel-left"><h4>Mumbai population</h4></div>
+        <div class="funnel-right"><div class="out">22.1M</div></div>
+      </div>
+    </div>
+
+    <div class="funnel-step">
+      <div class="funnel-row">
+        <div class="funnel-left"><h4>Travelers (≥1 trip/yr)</h4><p class="desc">60%</p></div>
+        <div class="funnel-right"><div class="out">13.3M</div></div>
+      </div>
+      <div class="assumption">Assumption: national avg is 40%, adjusted up to 60% for Mumbai's higher income and urban profile. Not independently verified.</div>
+    </div>
+
+    <div class="funnel-step">
+      <div class="funnel-row">
+        <div class="funnel-left"><h4>By purpose of travel</h4></div>
+        <div class="funnel-right"></div>
+      </div>
+      <table style="margin-top:10px;">
+        <tr><th>Purpose</th><th>Share</th><th>Size</th></tr>
+        <tr><td>Leisure</td><td class="num">38%</td><td class="num">5.0M</td></tr>
+        <tr><td>Religious</td><td class="num">26%</td><td class="num">3.5M</td></tr>
+        <tr><td>Business/Work</td><td class="num">22%</td><td class="num">2.9M</td></tr>
+        <tr><td>Adventure/Niche</td><td class="num">7%</td><td class="num">0.9M</td></tr>
+        <tr><td>Other</td><td class="num">7%</td><td class="num">0.9M</td></tr>
+      </table>
+      <div class="chart-card"><div class="chart-wrap"><canvas id="purposeChart"></canvas></div></div>
+    </div>
+
+    <div class="funnel-step">
+      <div class="funnel-row">
+        <div class="funnel-left"><h4>Target purpose (Leisure + Adventure)</h4><p class="desc">These segments are relevant to CD</p></div>
+        <div class="funnel-right"><div class="out">5.9M</div></div>
+      </div>
+    </div>
+
+    <div class="funnel-step">
+      <div class="funnel-row">
+        <div class="funnel-left"><h4>Domestic vs. International</h4><p class="desc">90% / 10%</p></div>
+        <div class="funnel-right"><div class="out">5.3M</div><div class="pct">domestic</div></div>
+      </div>
+      <div class="assumption">Assumption: national split is 99/1, adjusted to 90/10 since Mumbai travelers skew more international. Directional, not measured.</div>
+    </div>
+
+    <div class="funnel-step">
+      <div class="funnel-row">
+        <div class="funnel-left"><h4>Destination type (of 5.3M domestic)</h4></div>
+        <div class="funnel-right"></div>
+      </div>
+      <table style="margin-top:10px;">
+        <tr><th>Type</th><th>Share</th><th>Size</th></tr>
+        <tr><td>Mountains/Hills</td><td class="num">34%</td><td class="num">1.8M</td></tr>
+        <tr><td>Coasts</td><td class="num">24%</td><td class="num">1.3M</td></tr>
+        <tr><td>Eco-tourism</td><td class="num">16%</td><td class="num">0.8M</td></tr>
+        <tr><td>Trek/Adventure</td><td class="num">14%</td><td class="num">0.7M</td></tr>
+        <tr><td>Other</td><td class="num">12%</td><td class="num">0.6M</td></tr>
+      </table>
+      <div class="chart-card"><div class="chart-wrap"><canvas id="destChart"></canvas></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SPEND SEGMENTATION ============ -->
+<section class="alt">
+  <div class="wrap">
+    <span class="eyebrow">02 — Spend Segmentation & CD Target</span>
+    <h2>Of the 5.3M domestic, split by spend/person/day</h2>
+    <table>
+      <tr><th>Segment</th><th>Price band</th><th>Age</th><th>Share</th><th>Size</th></tr>
+      <tr><td>Budget</td><td class="num">₹1,500–2,000</td><td>18–24</td><td class="num">55%</td><td class="num">2.92M</td></tr>
+      <tr><td>Mid</td><td class="num">₹3,000–5,000</td><td>25–40</td><td class="num">33%</td><td class="num">1.75M</td></tr>
+      <tr><td>Premium</td><td class="num">₹10,000+</td><td>30–45</td><td class="num">12%</td><td class="num">0.64M</td></tr>
+    </table>
+    <div class="chart-card"><div class="chart-wrap"><canvas id="spendChart"></canvas></div></div>
+
+    <div class="sizing-box">
+      <h3>CD targets Mid + Premium = 2.39M</h3>
+      <div class="sizing-range">
+        <div><div class="k">Mid</div><div class="v">1.75M</div></div>
+        <div><div class="k">Premium</div><div class="v">0.64M</div></div>
+        <div><div class="k">Combined target</div><div class="v">2.39M</div></div>
+      </div>
+      <p class="note" style="color:rgba(255,255,255,.8);margin-top:14px;">Budget segment excluded — price-sensitive, doesn't fit CD's positioning.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REACH & CONVERSION ============ -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">03 — Reach & Conversion Targets</span>
+    <h2>From target segment to customers</h2>
+    <table>
+      <tr><th>Step</th><th>Calculation</th><th>Result</th></tr>
+      <tr><td>CD reach</td><td class="num">10% of 2.39M</td><td class="num">238,500 people</td></tr>
+      <tr><td>Initial conversion target</td><td class="num">1% of reach</td><td class="num">~2,385 customers</td></tr>
+    </table>
+
+    <h4 style="margin:20px 0 10px;font-size:14px;color:var(--forest);">Conversion rate scale-up</h4>
+    <table>
+      <tr><th>Conversion Rate</th><th>Customers</th></tr>
+      <tr><td>1%</td><td class="num">~2,385</td></tr>
+      <tr><td>2%</td><td class="num">~4,770</td></tr>
+      <tr><td>3%</td><td class="num">~7,155</td></tr>
+      <tr><td>4%</td><td class="num">~9,540</td></tr>
+      <tr><td>5%</td><td class="num">~11,925</td></tr>
+      <tr><td>6%</td><td class="num">~14,310</td></tr>
+      <tr><td>7%</td><td class="num">~16,695</td></tr>
+      <tr><td>8%</td><td class="num">~19,080</td></tr>
+      <tr><td>9%</td><td class="num">~21,465</td></tr>
+      <tr><td>10%</td><td class="num">~23,850</td></tr>
+    </table>
+    <div class="chart-card"><div class="chart-wrap"><canvas id="conversionChart"></canvas></div></div>
+  </div>
+</section>
+
+<!-- ============ MARKET SIZE SUMMARY ============ -->
+<section class="alt">
+  <div class="wrap">
+    <span class="eyebrow">04 — Market Size Summary</span>
+    <h2>Same funnel, in lakhs</h2>
+    <table>
+      <tr><th>Metric</th><th>Value</th><th>Lakhs</th></tr>
+      <tr><td>Total population</td><td class="num">22.1M</td><td class="num">221L</td></tr>
+      <tr><td>Total travelers</td><td class="num">13.3M</td><td class="num">133L</td></tr>
+      <tr><td>Target purpose (Leisure+Adventure)</td><td class="num">5.9M</td><td class="num">59L</td></tr>
+      <tr><td>Domestic</td><td class="num">5.3M</td><td class="num">53L</td></tr>
+      <tr><td>Target spend segment (Mid+Premium)</td><td class="num">2.39M</td><td class="num">23.9L</td></tr>
+      <tr><td>Realistic yearly reach</td><td class="num">0.2M</td><td class="num">2L</td></tr>
+    </table>
+    <div class="chart-card"><div class="chart-wrap"><canvas id="marketSizeChart"></canvas></div></div>
+
+    <h4 style="margin:20px 0 10px;font-size:14px;color:var(--forest);">Reach scaled by trip frequency</h4>
+    <table>
+      <tr><th>Trips/yr</th><th>Total trip volume</th></tr>
+      <tr><td>1.5</td><td class="num">3L</td></tr>
+      <tr><td>2.5</td><td class="num">5L</td></tr>
+      <tr><td>4</td><td class="num">8L</td></tr>
+    </table>
+    <div class="chart-card"><div class="chart-wrap"><canvas id="tripFreqChart"></canvas></div></div>
+  </div>
+</section>
+
+<footer>Mumbai Market Sizing & Conversion Analysis — CD</footer>
+
+<script>
+window.addEventListener('load', () => {
+  const green='#1E8E5A', green2='#4CAF50', soil='#A9824C', forest='#0F3A28', light='#EFE3CE', grey='#6B7280';
+  const palette=[green,green2,soil,forest,light,'#8FBFA3'];
+  Chart.defaults.font.family="'Inter',sans-serif";
+
+  new Chart(document.getElementById('funnelChart'), {
+    type:'bar',
+    data:{ labels:['Population','Travelers','Target purpose','Domestic','Target spend seg.','Yearly reach'],
+      datasets:[{ data:[22.1,13.3,5.9,5.3,2.39,0.2], backgroundColor:forest, borderRadius:6, maxBarThickness:46 }] },
+    options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{ display:false } },
+      scales:{ x:{ beginAtZero:true, ticks:{ callback:v=>v+'M' }, grid:{ color:'#eee' } }, y:{ grid:{ display:false } } } }
+  });
+
+  new Chart(document.getElementById('purposeChart'), {
+    type:'doughnut',
+    data:{ labels:['Leisure','Religious','Business/Work','Adventure/Niche','Other'],
+      datasets:[{ data:[38,26,22,7,7], backgroundColor:palette }] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ boxWidth:12, font:{size:12} } } } }
+  });
+
+  new Chart(document.getElementById('destChart'), {
+    type:'bar',
+    data:{ labels:['Mountains/Hills','Coasts','Eco-tourism','Trek/Adventure','Other'],
+      datasets:[{ data:[34,24,16,14,12], backgroundColor:[green,green2,soil,forest,light], borderRadius:8, maxBarThickness:40 }] },
+    options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{ display:false } },
+      scales:{ x:{ beginAtZero:true, ticks:{ callback:v=>v+'%' }, grid:{ color:'#eee' } }, y:{ grid:{ display:false } } } }
+  });
+
+  new Chart(document.getElementById('spendChart'), {
+    type:'bar',
+    data:{ labels:['Budget','Mid','Premium'],
+      datasets:[{ label:'Size (M)', data:[2.92,1.75,0.64], backgroundColor:[light,green2,forest], borderRadius:8, maxBarThickness:70 }] },
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{ display:false } },
+      scales:{ y:{ beginAtZero:true, ticks:{ callback:v=>v+'M' }, grid:{ color:'#eee' } }, x:{ grid:{ display:false } } } }
+  });
+
+  new Chart(document.getElementById('conversionChart'), {
+    type:'line',
+    data:{ labels:['1%','2%','3%','4%','5%','6%','7%','8%','9%','10%'],
+      datasets:[{ label:'Customers', data:[2385,4770,7155,9540,11925,14310,16695,19080,21465,23850],
+        borderColor:green, backgroundColor:'rgba(30,142,90,0.12)', fill:true, tension:0.3, pointBackgroundColor:forest }] },
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{ display:false } },
+      scales:{ y:{ beginAtZero:true, grid:{ color:'#eee' } }, x:{ grid:{ display:false } } } }
+  });
+
+  new Chart(document.getElementById('marketSizeChart'), {
+    type:'bar',
+    data:{ labels:['Total pop','Travelers','Target purpose','Domestic','Target spend seg.','Yearly reach'],
+      datasets:[{ label:'Lakhs', data:[221,133,59,53,23.9,2], backgroundColor:green2, borderRadius:6, maxBarThickness:46 }] },
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{ display:false } },
+      scales:{ y:{ beginAtZero:true, ticks:{ callback:v=>v+'L' }, grid:{ color:'#eee' } }, x:{ grid:{ display:false } } } }
+  });
+
+  new Chart(document.getElementById('tripFreqChart'), {
+    type:'bar',
+    data:{ labels:['1.5 trips/yr','2.5 trips/yr','4 trips/yr'],
+      datasets:[{ data:[3,5,8], backgroundColor:[light,soil,forest], borderRadius:8, maxBarThickness:70 }] },
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{ display:false } },
+      scales:{ y:{ beginAtZero:true, ticks:{ callback:v=>v+'L' }, grid:{ color:'#eee' } }, x:{ grid:{ display:false } } } }
+  });
+});
+</script>
+</body>
+</html>
